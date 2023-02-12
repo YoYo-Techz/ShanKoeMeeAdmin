@@ -1,0 +1,187 @@
+{% extends "partition/layout.html" %}
+
+{% block body %}
+{{session}}
+
+		<!-- Main Content -->
+		<div class="page-wrapper">
+			<div class="container-fluid">
+
+				<!-- Title -->
+				<div class="row heading-bg">
+					<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+					  <h5 class="txt-dark">Regulay Tournament</h5>
+					</div>
+					<!-- Breadcrumb -->
+					<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+					  <ol class="breadcrumb">
+						<li><a href="/">Dashboard</a></li>
+						<li><a href="#"><span>Regulay Tournament</span></a></li>
+					  </ol>
+					</div>
+					<!-- /Breadcrumb -->
+				</div>
+				<!-- /Title -->
+				{% include "partition/notification.html" %}
+				<!-- Row -->
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<!-- <h6 class="panel-title txt-dark">data Table</h6> -->
+								</div>
+								<div class="pull-right">
+									<a href="/regular-tournament/addTournament"><button type="button" class="btn btn-primary btn-md"><i class="fa fa-plus"></i> Add Tournament</button></a>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="table-wrap">
+										<div class="table-responsive">
+										<input type="hidden" id="gameType"  name="gameType">
+											<table id="myTable" class="table table-hover display  pb-30" >
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Status</th>
+														<th>Starts In</th>
+														<th>Action</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+{% endblock %}
+
+{% block Jscript %}
+<script>
+$(document).ready( function () {
+	var host = window.location.origin;
+	$('#myTable').DataTable({
+		"oLanguage": {
+			"sSearch": "Search Username"
+		},
+		// "scrollX": true,
+		"processing": true,
+		"serverSide": true,
+		// "searching": false,
+		"ordering": false,
+		"autoWidth": false,
+		"pageLength": 25,
+		"ajax": host + "/regular-tournament/getRegularTournament",
+		"columns": [
+			// { "data": "_id" },
+			{ "data": "name" },
+			{ "data": "status" },
+			{ "data": "startsIn",
+
+			render: function(data,type,row){
+
+				var date2 = new Date(row.tournament_date_time), // 10:09 to
+		          date1 = new Date() // 10:20 is 11 mins
+		           
+
+		          //Get 1 day in milliseconds
+		          var one_day = 1000*60*60*24;
+
+		          // Convert both dates to milliseconds
+		          var date1_ms = date1.getTime();
+		          var date2_ms = date2.getTime();
+
+		          console.log("1 :",date1_ms);
+		          console.log("2 :",date2_ms);
+
+		          // Calculate the difference in milliseconds
+		          var difference_ms = date2_ms - date1_ms;
+		          //take out milliseconds
+		          difference_ms = difference_ms/1000;
+		          var seconds = Math.floor(difference_ms % 60);
+		          difference_ms = difference_ms/60; 
+		          var minutess = Math.floor(difference_ms % 60);
+		          difference_ms = difference_ms/60; 
+		          var hours = Math.floor(difference_ms % 24);  
+		          var days = Math.floor(difference_ms/24);
+
+		          return startsIn = days + ' Days, ' + hours + ' Hours, ' + minutess + ' Minutes, and ' + seconds + ' Seconds';
+			 }
+			},
+
+			{
+				"data": "action",
+				render : function(data, type, row){
+					return '<a href="/regular-tournament/editTournament/'+row._id+'"><button type="button" class="btn btn-warning btn-xs btn-rounded" name="edit"><i class="fa fa-edit " aria-hidden="true"></i></button></a> <button type="button" name="delete" id="'+row._id+'" class="btn btn-danger btn-xs delete btn-rounded"><i class="fa fa-trash" aria-hidden="true"></i></button>'
+					// return '<a href="/userEdit/'+row._id+'"><button type="button" class="btn btn-warning btn-xs" name="edit"><i class="fa fa-edit" aria-hidden="true"></i></button></a> <button type="button" name="delete" id="'+row._id+'" class="btn btn-danger btn-xs delete"><i class="fa fa-trash" aria-hidden="true"></i></button> '
+				}
+			}
+		]
+	});
+
+	$(function() {
+		"use strict";
+
+		var SweetAlert = function() {};
+
+		SweetAlert.prototype.init = function() {
+
+			//Parameter
+			$('body').on('click', '.delete', function(e){
+				var id = $(this).attr('id');
+				var thisElement = this;
+					swal({
+							title: "Are you sure?",
+							text: "You will not be able to recover this User!",
+							type: "warning",
+							showCancelButton: true,
+							confirmButtonColor: "#e69a2a",
+							confirmButtonText: "Yes, delete it!",
+							cancelButtonText: "No, cancel plx!",
+							closeOnConfirm: false,
+							closeOnCancel: false
+					}, function(isConfirm){
+							if (isConfirm) {
+								$.ajax({
+									type: 'POST',
+									url: host + "/regular-tournament/delete",
+									data: {id: id},
+									success: function(resultData) {
+										// alert(resultData)
+										console.log(resultData);
+										if (resultData == 'success') {
+											$(thisElement).parent().parent().hide(700);
+											swal("Deleted!", "Your imaginary file has been deleted.", "success");
+										}else {
+												alert("Something went wrong")
+										}
+										// alert("Save Complete")
+									}
+								});
+									swal("Deleted!", "Stacks Deleted Succesfully.", "success");
+							} else {
+									swal("Cancelled", "Stacks Not Deleted)", "error");
+							}
+					});
+					return false;
+			});
+
+		},
+		$.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert;
+
+		$.SweetAlert.init();
+	});
+
+} );
+
+
+</script>
+{% endblock %}

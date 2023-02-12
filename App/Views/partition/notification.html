@@ -1,0 +1,21 @@
+{% if (success.length > 0) %}
+<div class="alert alert-success alert-dismissable notifications">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>{{success}}
+</div>
+{% endif %}
+{% if (error.length > 0) %}
+<div class="alert alert-danger alert-dismissable notifications">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>{{error}}
+</div>
+{% endif %}
+
+
+<script>
+  setTimeout(function(){
+    $('.notifications').slideUp('slow');
+    var cells =  $('.notifications');
+    setTimeout(function(){
+      cells.remove();
+    },1000);
+  },5000);
+</script>

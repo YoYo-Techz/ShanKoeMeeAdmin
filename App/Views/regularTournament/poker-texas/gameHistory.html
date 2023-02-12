@@ -1,0 +1,176 @@
+{% extends "partition/layout.html" %}
+
+{% block body %}
+{{session}}
+
+		<!-- Main Content -->
+		<div class="page-wrapper">
+			<div class="container-fluid">
+
+				<!-- Title -->
+				<div class="row heading-bg">
+					<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+					  <h5 class="txt-dark">Regulay Tournament</h5>
+					</div>
+					<!-- Breadcrumb -->
+					<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+					  <ol class="breadcrumb">
+						<li><a href="/">Dashboard</a></li>
+						<li><a href="#"><span>Game Master</span></a></li>
+					  </ol>
+					</div>
+					<!-- /Breadcrumb -->
+				</div>
+				<!-- /Title -->
+				{% include "partition/notification.html" %}
+				<!-- Row -->
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<!-- <h6 class="panel-title txt-dark">data Table</h6> -->
+								</div>
+								<div class="pull-right">
+									<!-- <a href="/cashgames/addStacks"><button type="button" class="btn btn-primary btn-md"><i class="fa fa-plus"></i> Add Stack</button></a> -->
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+								
+									<div class="table-wrap">
+										<div class="table-responsive">
+										<input type="hidden" id="gameType"  name="gameType" value="{{type}}">
+										<input type="hidden" id="tableType"  name="gameType" value="{{tableType}}">
+											<table id="myTable" class="table table-hover display  pb-30" >
+												<thead>
+													<tr>
+														<th>Id</th>
+														<th>Small Blind</th>
+														<th>Big Blind</th>
+														<th>Status</th>
+														<th>Pot</th>
+														<th>Date</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+{% endblock %}
+
+{% block Jscript %}
+<script>
+$(document).ready( function () {
+	var host = window.location.origin;
+	var texasId = $('#gameType').val();
+	var tableType = $('#tableType').val();
+	$('#myTable').DataTable({
+		"oLanguage": {
+			"sSearch": "Search Username"
+		},
+		// "scrollX": true,
+		"processing": true,
+		"serverSide": true,
+		// "searching": false,
+		"ordering": false,
+		"autoWidth": false,
+		"pageLength": 25,
+		"ajax": host + "/regular-tournament/texas/gameHistory/"+texasId+"/"+tableType,
+		"columns": [
+			{ "data": "gameNumber",
+				render : function(data, type, row){
+				return '<a href="/regular-tournament/texas/tableHistory/'+row._id+'" title="Table id" >'+row.gameNumber+'</a>';
+			  }
+			},
+			{ "data": "smallBlind" },
+			{ "data": "bigBlind" },
+			{ "data": "status" },
+			{ "data": "pot" },
+			{ "data": "createdAt",
+
+				render: function(data,type,row){
+				  let dt = new Date(row.createdAt);
+			      let date = dt.getDate();
+			      let month = parseInt(dt.getMonth()+1);
+			      let year = dt.getFullYear();
+			      let hours = dt.getHours();
+			      let minutes = dt.getMinutes();
+			      let ampm = hours >= 12 ? 'pm' : 'am';
+			      hours = hours % 12;
+			      hours = hours ? hours : 12;
+			      minutes = minutes < 10 ? '0'+ minutes : minutes;
+			      let createdAt = month + '/' + date + '/' + year + ' ' + hours + ':' + minutes + ' ' + ampm;
+			      return createdAt;
+			 }
+			 },
+		]
+	});
+
+	$(function() {
+		"use strict";
+
+		var SweetAlert = function() {};
+
+		SweetAlert.prototype.init = function() {
+
+			//Parameter
+			$('body').on('click', '.delete', function(e){
+				var id = $(this).attr('id');
+				var thisElement = this;
+					swal({
+							title: "Are you sure?",
+							text: "You will not be able to recover this User!",
+							type: "warning",
+							showCancelButton: true,
+							confirmButtonColor: "#e69a2a",
+							confirmButtonText: "Yes, delete it!",
+							cancelButtonText: "No, cancel plx!",
+							closeOnConfirm: false,
+							closeOnCancel: false
+					}, function(isConfirm){
+							if (isConfirm) {
+								$.ajax({
+									type: 'POST',
+									url: host + "/cashgames/getStacksDelete",
+									data: {id: id},
+									success: function(resultData) {
+										// alert(resultData)
+										console.log(resultData);
+										if (resultData == 'success') {
+											$(thisElement).parent().parent().hide(700);
+											swal("Deleted!", "Your imaginary file has been deleted.", "success");
+										}else {
+												alert("Something went wrong")
+										}
+										// alert("Save Complete")
+									}
+								});
+									swal("Deleted!", "Stacks Deleted Succesfully.", "success");
+							} else {
+									swal("Cancelled", "Stacks Not Deleted)", "error");
+							}
+					});
+					return false;
+			});
+
+		},
+		$.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert;
+
+		$.SweetAlert.init();
+	});
+
+} );
+
+
+</script>
+{% endblock %}

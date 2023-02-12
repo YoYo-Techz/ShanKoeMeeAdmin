@@ -1,0 +1,205 @@
+{% extends "partition/layout.html" %}
+
+
+{% block body %}
+
+		<!-- Main Content -->
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<!-- Title -->
+				<section class="content-header">
+				    <h1>Offers Table</h1>
+				    <ol class="breadcrumb">
+				        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+				        <li class="active" href="/player">Offers</li>
+				    </ol>
+				</section>
+				<!-- /Title -->
+				{% include "partition/notification.html" %}
+				<!-- Row -->
+				<section class="content">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="panel panel-default card-view">
+								<div class="panel-heading">
+									<div class="pull-left">
+										<h6 class="panel-title txt-dark">Offers</h6>
+									</div>
+									<div class="pull-right">
+									<a href="/addOffers"><button type="button" class="btn btn-primary btn-md"><i class="fa fa-plus"></i> Add Offers</button></a>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+								<div class="panel-wrapper collapse in">
+									<div class="panel-body">
+										<div class="table-wrap">
+											<div class="table-responsive">
+												<table id="myTable" class="table table-bordered table-striped">
+													<thead>
+														<tr>
+															<th>name</th>
+															<th>Action</th>
+														</tr>
+													</thead>
+													<tbody>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+
+{% endblock %}
+
+{% block Jscript %}
+<!--<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> -->
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<!-- <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script>
+
+$(document).ready( function () {
+	var host = window.location.origin;
+	$('#myTable').DataTable({
+    "dom": 'lBfrtip',
+    "buttons": [
+      'copy', 'csv', 'excel', 'pdf', 'print'
+    ],
+
+		"oLanguage": {
+			"sSearch": "Search name or Date : ",
+		},
+		// "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+		// "scrollX": true,
+		"processing": true,
+		"serverSide": true,
+		"searching": true,
+		"ordering": false,
+		"autoWidth": true,
+		"aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+		"iDisplayLength": 10,
+		"ajax": host + "/offers/list",
+		// "buttons": ['csv','print', 'excel', 'pdf'],
+
+		"columns": [
+			// { "data": "_id" },
+			{ "data": "name" },
+			{
+				"data": "action",
+				render : function(data, type, row){
+					return '<a href="/offerEdit/'+row._id+'"><button type="button" class="btn btn-warning btn-xs btn-rounded" name="edit" title="Edit Offer"><i class="fa fa-edit" aria-hidden="true"></i></button></a> <button type="button" title="Delete Offer" name="delete" id="'+row._id+'" class="btn btn-danger btn-xs btn-rounded delete"><i class="fa fa-trash" aria-hidden="true"></i></button>'
+				}
+			}
+		]
+	});
+
+
+	$(function() {
+		"use strict";
+
+		var SweetAlert = function() {};
+
+		SweetAlert.prototype.init = function() {
+
+			//Parameter
+			$('body').on('click', '.delete', function(e){
+				var id = $(this).attr('id');
+				var thisElement = this;
+					swal({
+							title: "Are you sure?",
+							text: "You will not be able to recover this Offer!",
+							type: "warning",
+							showCancelButton: true,
+							confirmButtonColor: "#e69a2a",
+							confirmButtonText: "Yes, delete it!",
+							cancelButtonText: "No, cancel plx!",
+							closeOnConfirm: false,
+							closeOnCancel: false
+					}, function(isConfirm){
+							if (isConfirm) {
+								$.ajax({
+									type: 'POST',
+									url: host + "/getOfferDelete",
+									data: {id: id},
+									success: function(resultData) {
+										// alert(resultData)
+										console.log(resultData);
+										if (resultData == 'success') {
+											$(thisElement).parent().parent().hide(700);
+											swal("Deleted!", "Your imaginary file has been deleted.", "success");
+										}else {
+												alert("Something went wrong")
+										}
+										// alert("Save Complete")
+									}
+								});
+									swal("Deleted!", "Offers Deleted Succesfully.", "success");
+							} else {
+									swal("Cancelled", "Offers Not Deleted)", "error");
+							}
+					});
+					return false;
+			});
+
+			// Active & Deactive
+
+			$('body').on('click', '.testimonialActive', function(e){
+					var id = $(this).attr('id');
+					var thisElement = this;
+						swal({
+								title: "Are you sure?",
+								text: "Do you want to update the status?",
+								type: "warning",
+								showCancelButton: true,
+								confirmButtonColor: "#e69a2a",
+								confirmButtonText: "Yes, Update it!",
+								cancelButtonText: "No, cancel pls!",
+								closeOnConfirm: false,
+								closeOnCancel: false
+						}, function(isConfirm){
+								if (isConfirm) {
+									$.ajax({
+										type: 'POST',
+										url: host + "/player/active",
+										data: {id: id},
+										success: function(resultData , data) {
+											console.log(data);
+											if (resultData == 'success') {
+												location.reload();
+												//$(thisElement).parent().parent().hide(700);
+												//swal("Update!", "Player Status Updated Successfully..", "success");
+											}else {
+													alert("Something went wrong")
+											}
+
+										}
+									});
+										swal("Success!", "Offers Status Updated Succesfully.", "success");
+								} else {
+										swal("Cancelled", "Offers Status not Updated)", "error");
+								}
+						});
+						return false;
+			});
+
+		},
+		$.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert;
+
+		$.SweetAlert.init();
+	});
+
+} );
+
+</script>
+{% endblock %}

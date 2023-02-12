@@ -1,0 +1,73 @@
+{"message":"Initializing Server...","level":"info"}
+{"message":"Loading... App Controllers","level":"info"}
+{"message":"Loading... App Middlewares","level":"info"}
+{"message":"Loading... App Models","level":"info"}
+{"message":"Loading... App Services","level":"info"}
+{"message":"Loading... Router","level":"info"}
+{"message":"Loading... Game Server.","level":"info"}
+{"message":"Initializing Variables","level":"info"}
+{"message":"Loading... DB Connection","level":"info"}
+{"message":"Mongoose default connection disconnected","level":"info"}
+{"message":"Mongoose default connection error: MongoNetworkError: failed to connect to server [164.52.199.98:26767] on first connect [MongoNetworkError: connection timed out\n    at connectionFailureError (D:\\Codersboy2\\Teenpatti\\AdminPanel\\rummy-admin\\node_modules\\mongodb\\lib\\core\\connection\\connect.js:406:14)\n    at Socket.<anonymous> (D:\\Codersboy2\\Teenpatti\\AdminPanel\\rummy-admin\\node_modules\\mongodb\\lib\\core\\connection\\connect.js:294:16)\n    at Object.onceWrapper (events.js:421:28)\n    at Socket.emit (events.js:315:20)\n    at Socket._onTimeout (net.js:482:8)\n    at listOnTimeout (internal/timers.js:549:17)\n    at processTimers (internal/timers.js:492:7) {\n  [Symbol(mongoErrorContextSymbol)]: {}\n}]","level":"info"}
+{"message":"Mongoose default connection disconnected through app termination","level":"info"}
+{"message":"Initializing Server...","level":"info"}
+{"message":"Loading... App Controllers","level":"info"}
+{"message":"Loading... App Middlewares","level":"info"}
+{"message":"Loading... App Models","level":"info"}
+{"message":"Loading... App Services","level":"info"}
+{"message":"Loading... Router","level":"info"}
+{"message":"Loading... Game Server.","level":"info"}
+{"message":"Initializing Variables","level":"info"}
+{"message":"Loading... DB Connection","level":"info"}
+{"message":"Mongoose default connection open to mongodb+srv://codersboy:kargan82@mongodbcluster.gyzkr.mongodb.net/test","level":"info"}
+{"message":"Loading... Socket","level":"info"}
+{"message":"Mongoose default connection disconnected","level":"info"}
+{"message":"Initializing Server...","level":"info"}
+{"message":"Loading... App Controllers","level":"info"}
+{"message":"Loading... App Middlewares","level":"info"}
+{"message":"Loading... App Models","level":"info"}
+{"message":"Loading... App Services","level":"info"}
+{"message":"Loading... Router","level":"info"}
+{"message":"Loading... Game Server.","level":"info"}
+{"message":"Initializing Variables","level":"info"}
+{"message":"Loading... DB Connection","level":"info"}
+{"message":"Mongoose default connection open to mongodb+srv://codersboy:kargan82@mongodbcluster.gyzkr.mongodb.net/test","level":"info"}
+{"message":"Loading... Socket","level":"info"}
+{"message":"Mongoose default connection disconnected","level":"info"}
+{"message":"Mongoose default connection disconnected through app termination","level":"info"}
+{"message":"Initializing Server...","level":"info"}
+{"message":"Loading... App Controllers","level":"info"}
+{"message":"Loading... App Middlewares","level":"info"}
+{"message":"Loading... App Models","level":"info"}
+{"message":"Loading... App Services","level":"info"}
+{"message":"Loading... Router","level":"info"}
+{"message":"Loading... Game Server.","level":"info"}
+{"message":"Initializing Variables","level":"info"}
+{"message":"Loading... DB Connection","level":"info"}
+{"message":"Mongoose default connection open to mongodb+srv://codersboy:kargan82@mongodbcluster.gyzkr.mongodb.net/test","level":"info"}
+{"message":"Loading... Socket","level":"info"}
+{"message":"Mongoose default connection disconnected","level":"info"}
+{"message":"Mongoose default connection disconnected through app termination","level":"info"}
+{"message":"Initializing Server...","level":"info"}
+{"message":"Loading... App Controllers","level":"info"}
+{"message":"Loading... App Middlewares","level":"info"}
+{"message":"Loading... App Models","level":"info"}
+{"message":"Loading... App Services","level":"info"}
+{"message":"Loading... Router","level":"info"}
+{"message":"Loading... Game Server.","level":"info"}
+{"message":"Initializing Variables","level":"info"}
+{"message":"Loading... DB Connection","level":"info"}
+{"message":"Mongoose default connection open to mongodb+srv://codersboy:kargan82@mongodbcluster.gyzkr.mongodb.net/test","level":"info"}
+{"message":"Loading... Socket","level":"info"}
+{"message":"Mongoose default connection disconnected","level":"info"}
+{"message":"Initializing Server...","level":"info"}
+{"message":"Loading... App Controllers","level":"info"}
+{"message":"Loading... App Middlewares","level":"info"}
+{"message":"Loading... App Models","level":"info"}
+{"message":"Loading... App Services","level":"info"}
+{"message":"Loading... Router","level":"info"}
+{"message":"Loading... Game Server.","level":"info"}
+{"message":"Initializing Variables","level":"info"}
+{"message":"Loading... DB Connection","level":"info"}
+{"message":"Mongoose default connection open to mongodb+srv://codersboy:kargan82@mongodbcluster.gyzkr.mongodb.net/test","level":"info"}
+{"message":"Loading... Socket","level":"info"}

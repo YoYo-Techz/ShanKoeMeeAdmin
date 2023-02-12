@@ -1,0 +1,93 @@
+{% extends "partition/layout.html" %}
+
+
+{% block body %}
+
+
+<!-- Main Content -->
+<div class="page-wrapper">
+	<div class="container-fluid">
+
+		<!-- Breadcrumb -->
+		<section class="content-header">
+		    <h1>TDS Settings</h1>
+		    <ol class="breadcrumb">
+		        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+		        <li class="active">TDS Settings </li>
+		    </ol>
+		</section>
+		<!-- /Breadcrumb -->
+
+	</div>
+		<!-- /Title -->
+		{% include "partition/notification.html" %}
+		<!-- Row -->
+		<section class="content">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default card-view">
+						<div class="panel-heading">
+							<div class="pull-left">
+								<h6 class="panel-title txt-dark">TDS Settings</h6>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-wrapper collapse in">
+							<div class="panel-body">
+								<div class="table-wrap">
+									<div class="table-responsive">
+										{% if tdsSettings %}
+										<form method="POST" action="/tds-settings/updateTdsSettings" class="form-horizontal">
+											{% else %}
+											<form method="POST" action="/tds-settings/addTdsSettings" class="form-horizontal">
+												{% endif %}
+												<table border="0" class="table display  pb-30">
+													<div class="col-sm-12">
+														<div class="panel-wrapper collapse in">
+															<div class="panel-body">
+															<input type="hidden" name="id" value="{{tdsSettings.id}}">
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="username">Amount:</label>
+																<div class="col-sm-6">
+																	<input type="text" class="form-control" id="amount" placeholder="Enter Amount"  name="amount" value="{{tdsSettings.amount}}" >
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="username">TDS Percentage:</label>
+																<div class="col-sm-6">
+																	<input type="text" class="form-control" id="rack" placeholder="Enter TDS Percentage"  name="rack" value="{{tdsSettings.rack}}" >
+																</div>
+															</div>	
+															</div>
+														</div>
+													</div>
+													<tr>
+														<td colspan="2">
+															<input type="submit" class="btn btn-success btn-lg" value="submit">
+															
+														</td>
+													</tr>
+												</div>
+											</div>
+										</table>
+										</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- /Row -->
+			</div>
+		</section>
+
+{% endblock %}
+
+{% block Jscript %}
+	<script>
+		$(document).ready( function () {
+			var host = window.location.origin;
+		} );
+	</script>
+{% endblock %}

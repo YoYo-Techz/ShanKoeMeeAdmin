@@ -1,0 +1,174 @@
+{% extends "partition/layout.html" %}
+
+
+{% block body %}
+<!-- Main Content -->
+<div class="page-wrapper">
+	<div class="container-fluid">
+
+		<!-- Title -->
+		<section class="content-header">
+			<h1>Promocode table</h1>
+			<!-- Breadcrumb -->
+			<ol class="breadcrumb">
+				<li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+				<li class="active">Promocode</li>
+			</ol>
+			<!-- /Breadcrumb -->
+		</section>
+		<!-- /Title -->
+		{% include "partition/notification.html" %}
+		<!-- Row -->
+		<section class="content">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default card-view">
+						<div class="panel-heading">
+							<div class="pull-left">
+								<h6 class="panel-title txt-dark">Promocode</h6>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-wrapper collapse in">
+							<div class="panel-body">
+								<div class="table-wrap">
+									<div class="table-responsive">
+										{% if promocode %}
+										<form method="POST" action="/promocode/edit/{{promocode.id}}" class="form-horizontal" enctype="multipart/form-data">
+											{% else %}
+											<form method="POST" action="/promocode/add" class="form-horizontal" enctype="multipart/form-data">
+												{% endif %}
+												<table border="0" class="table display  pb-30">
+													<div class="col-sm-12">
+														<div class="panel-wrapper collapse in">
+															<div class="panel-body">
+															<!-- <input type="hidden" name="id" value="{{stacks.id}}"> -->
+																<div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="name">Name</label>
+																	<div class="col-sm-6">
+																		<input type="text" class="form-control"  id="name" placeholder="Enter Promocode Name" name="name" value="{{promocode.name}}" data-validation="letternumeric"
+																		data-validation-allowing=" "
+																		data-validation-error-msg="Name is required">
+																	</div>
+																</div>
+																<div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="status">Status:</label>
+																	<div class="col-sm-6">
+																		<select class="form-control" name="status" id="status">
+																			<option value="Active" {{ "selected" if promocode.status=='Active' else "" }} >Active</option>
+																			<option value="Inactive" {{ "selected" if promocode.status=='Inactive' else "" }} >Inactive</option>
+																		</select>
+																	</div>
+																</div>
+																<div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="code">Code</label>
+																	<div class="col-sm-6">
+																		<input type="text" class="form-control"  id="code" placeholder="Enter Code" name="code" value="{{promocode.code}}" data-validation="letternumeric"
+																		data-validation-allowing=" "
+																		data-validation-error-msg="Promocode is required">
+																	</div>
+																</div>
+																<div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="offer">Minimum Transaction</label>
+																	<div class="col-sm-6">
+																		<input type="text" class="form-control"  id="min_transaction" placeholder="Min. Transaction required to avail promocode" name="min_transaction" value="{{promocode.min_transaction}}" data-validation="number"
+																		data-validation-allowing='float'>
+																	</div>
+																</div>
+																<div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="offer">Offer(In %)</label>
+																	<div class="col-sm-6">
+																		<input type="text" class="form-control"  id="offer" placeholder="Offer Percentage" name="offer" value="{{promocode.offer}}" data-validation="number"
+																		data-validation-allowing='float'>
+																	</div>
+																</div>
+																<div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="offer">Maximum Offer</label>
+																	<div class="col-sm-6">
+																		<input type="text" class="form-control"  id="maximum_offer" placeholder="Maximum Offer value can be availed" name="maximum_offer" value="{{promocode.maximum_offer}}" data-validation="number"
+																		data-validation-allowing='float'>
+																	</div>
+																</div>
+
+																<div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="usage_limit">Usage Limits</label>
+																	<div class="col-sm-6">
+																		<input type="text" class="form-control"  id="usage_limit" placeholder="Game Usage Limit" name="usage_limit" value="{{promocode.usage_limit}}" data-validation="number"
+																		>
+																	</div>
+																</div>
+																<div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="individual_usage_limit">Individual Usage Limit</label>
+																	<div class="col-sm-6">
+																		<input type="text" class="form-control"  id="individual_usage_limit" placeholder="Individual Usage Limit" name="individual_usage_limit" value="{{promocode.individual_usage_limit}}" data-validation="number"
+																		>
+																	</div>
+																</div>
+
+																<div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="start_date">Start Date:</label>
+																	<div class="col-sm-6">
+																		<input type='text' required="required" class="form-control" name="start_date" id="start_date" placeholder="Start Date" data-date-format="YYYY-MM-DD HH:mm" value="{{start_date}}"
+																		data-validation="required" data-validation-error-msg="Start Date is Required."/>
+																	</div>
+																</div>
+																<div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="end_date">End Date:</label>
+																	<div class="col-sm-6">
+																		<input type='text' required="required" class="form-control" name="end_date" id="end_date" placeholder="End Date" data-date-format="YYYY-MM-DD HH:mm" value="{{end_date}}"
+																		 data-validation="required" data-validation-error-msg="End Date is Required."/>
+																	</div>
+																</div>
+																<!-- <div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="image">Image</label>
+																	<div class="col-sm-6">
+																		{% if promocode %}
+																			<img src="/{{promocode.image}}" width="100px" height="100px">
+																			<input type="file" class="form-control" id="image" name="image" >
+																		{% else %}
+																			<input type="file" class="form-control" id="image" name="image" data-validation="length mime"
+																			data-validation-length="min1"
+																			 data-validation-allowing="jpg, png, gif"data-validation-error-msg-mime="You can only upload images"data-validation-error-msg-length="Please uplaod Image">
+																		{% endif %}
+
+
+																	</div>
+																</div> -->
+															</div>
+														</div>
+													</div>
+													<tr>
+														<td colspan="2">
+															<input type="submit" class="btn btn-success btn-lg" value="submit">
+															<a href="/promocode" class="btn btn-info btn-lg">Cancel</a>
+														</td>
+													</tr>
+												</table>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+					<!-- /Row -->
+			</div>
+	 	</section>
+
+{% endblock %}
+
+{% block Jscript %}
+<script>
+	$(document).ready( function () {
+		// var host = window.location.origin;
+		$('#start_date, #end_date').datetimepicker();
+		$("#start_date").on("dp.change", function (e) {
+            $('#end_date').data("DateTimePicker").setMinDate(e.date);
+        });
+        $("#end_date").on("dp.change", function (e) {
+            $('#start_date').data("DateTimePicker").setMaxDate(e.date);
+        });
+	} );
+</script>
+{% endblock %}

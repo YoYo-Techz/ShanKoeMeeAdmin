@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "other/header.html" %}
+<body>
+<section>
+			<div class="account-overview">
+				<div class="container-fluid">
+						<div class="row">
+								<div class="col-md-6 m-g">
+									<div class="header">
+										<!-- <div class="container" onclick="myFunction(this)">
+													  <div class="bar1"></div>
+													  <div class="bar2"></div>
+													  <div class="bar3"></div>
+
+											</div> -->
+													<a href="#default" class="logo">&nbsp;<img  src="/other/img/10.png" alt="Rummy Circle"><span>The Rummy Round<sup>TM</sup></span></a>
+													<div class="float_right">
+															<h4 class="comandText">{{data.username}}</h4>
+													</div>
+													<script>
+													function myFunction(x) {
+													    x.classList.toggle("change");
+													}
+													</script>
+
+									  <div class="header-right">
+
+									  </div>
+									</div>
+								</div>
+								<div class="col-md-12 Profiles">
+										<h4>My Account</h4>
+								</div>
+			<div class="row">
+			<div class="col-md-4 m-e">
+				<ul class="sidebar-menu">
+		            <li class="">
+		                <a href="/other/account/{{ id }}" id="main_bar"><i class="fa fa-user m-m" aria-hidden="true "></i>Account Overview
+                <i class="fa fa-angle-right" aria-hidden="true" id="main_clas"></i>
+
+            </a>
+		            </li>
+		            <li class="treeview active">
+		                <a href="/other/profile/{{ id }}">
+		                   <i class="fa fa-user-md m-m" aria-hidden="true"></i>Profile<i class="fa fa-angle-right" aria-hidden="true"></i>
+
+		                </a>
+		            </li>
+		            <li class="treeview">
+		                <a href="/other/withdrawCash/{{ id }}"><i class="fa fa-money m-m" aria-hidden="true"></i>Withdraw Cash<i class="fa fa-angle-right" aria-hidden="true"></i>
+
+		                </a>
+		            </li>
+								{% if  kycDone != true %}
+									<li class="treeview">
+										 <a href="/other/uploadedDocuments/{{ id }}">
+												<i class="fa fa-tasks m-m" aria-hidden="true"></i>KYC<i class="fa fa-angle-right" aria-hidden="true"></i>
+								 	</li>
+								{% endif %}
+								<li class="treeview">
+										 <a href="/other/addBankDetails/{{ id }}">
+												<i class="fa fa-bank m-m" aria-hidden="true"></i>Add Bank Details<i class="fa fa-angle-right" aria-hidden="true"></i>
+								 	</li>
+
+
+		             <li class="treeview">
+		                <a href="/other/uploadHistory/{{ id }}">
+		                   <i class="fa fa-tasks m-m" aria-hidden="true"></i>View Document<i class="fa fa-angle-right" aria-hidden="true"></i>
+		            </li>
+		        </ul>
+		    </div>
+		</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		</section>
+	  {% include "other/footer.html" %}
+    {% block Jscript %}{% endblock %}
+</body>
+
+</html>

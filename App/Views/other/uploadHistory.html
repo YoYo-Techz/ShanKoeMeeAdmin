@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "other/header.html" %}
+<body>
+
+	<section>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<h2 class="page-title">Uploaded Documents</h2>
+					<div class="withdraw-cash">
+						<div class="row">
+							<div class="col-sm-8">
+								<p>You have uplodead documents.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="uplod_doc">
+						<div class="col-md-12 profile">
+							<h4>Upload History</h4>
+						</div>
+						{% for document in documents %}
+						<input type="hidden" name="filename" id="filename" value="{{document.document}}">
+						<a href="/other/document/{{document.document}}" title="" target="_blank">
+						<img id="myImg" src="img/img.jpg" alt="Snow" style="width:100%;max-width:300px">
+						</a>
+						{% endfor %}
+						<!-- <img id="myImg" src="img/img.jpg" alt="Snow" style="width:100%;max-width:300px"> -->
+						<div id="myModal" class="modal">
+							<span class="close">&times;</span>
+							<img class="modal-content" id="img01">
+							<div id="caption"></div>
+						</div>
+
+						<script>
+
+							var modal = document.getElementById('myModal');
+
+
+							var img = document.getElementById('myImg');
+							var modalImg = document.getElementById("img01");
+							var captionText = document.getElementById("caption");
+							img.onclick = function(){
+								modal.style.display = "block";
+								modalImg.src = this.src;
+								captionText.innerHTML = this.alt;
+							}
+
+
+							var span = document.getElementsByClassName("close")[0];
+
+
+							span.onclick = function() {
+								modal.style.display = "none";
+							}
+						</script>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div class="m-s">
+		<a href="/other/menu/{{ id }}"><i class="fa fa-angle-left" aria-hidden="true"></i>
+		Back</a>
+					</div>
+		<!-- /#wrapper -->
+		{% include "other/footer.html" %}
+		{% block Jscript %}
+
+		{% endblock %}
+	</body>
+
+	</html>

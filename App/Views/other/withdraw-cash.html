@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "other/header.html" %}
+
+<body>
+	<section>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<h2 class="page-title">Withdraw Cash</h2>
+					{% include "other/notification.html" %}
+					<div class="withdraw-cash">
+						<div class="row">
+							<div class="col-sm-6 col-md-5  ">
+							<form action="/other/postWithdrawCash/{{ playerId }}" method="post" id="formData">
+									<div class="form-group">
+										<input type="text" class="form-control" placeholder="First Name" name="first" value="{{player.firstname}}" data-validation="length alphanumeric"
+										data-validation-length=""
+										data-validation-error-msg="First name is required">
+									</div>
+									<div class="form-group">
+										<input type="text" class="form-control" placeholder="Last Name" name="last" value="{{player.lastname}}" data-validation="length alphanumeric"
+										data-validation-length=""
+										data-validation-error-msg="Last is required">
+									</div>
+									<div class="form-group">
+										<input type="date" class="form-control" name="date" placeholder="Date of Birth (DD/MM/YYYY)" required>
+									</div>
+									<div class="form-group">
+										<input type="text" name="address" class="form-control" placeholder="Address line 1" required="">
+									</div>
+									<div class="form-group">
+										<input type="text" class="form-control" name="pincode" placeholder="Pin Code" data-validation="number">
+									</div>
+									<div class="form-group">
+										<input type="text" name="dist" class="form-control" placeholder="District" data-validation-allowing="-_ " data-validation="length alphanumeric"
+										data-validation-length=""
+										data-validation-error-msg="District is required">
+									</div>
+									<div class="form-group">
+										<input type="text" class="form-control" name="state" placeholder="State" data-validation-allowing="-_ " data-validation="length alphanumeric"
+										data-validation-length=""
+										data-validation-error-msg="State is required">
+									</div>
+
+									<div class="form-group">
+										<input type="text" name="mobile" class="form-control" id="number" value="{{player.mobile}}" placeholder="Mobile Number" minlength="10" maxlength="10" data-validation="number">
+									</div>
+
+									<div class="form-group">
+										<input type="text" name="amount" class="form-control" id="amount" placeholder="Amount to Withdraw" minlength="2" maxlength="4" data-validation="number">
+									</div>
+
+									<!-- <div class="form-group mob-otp">
+										<div class="row">
+											<div class="col-sm-8">
+												<div class="form-group">
+													<input type="text" name="mobile" class="form-control" id="number" placeholder="Mobile Number" data-validation="number">
+												</div>
+												<div id="error" style="color: #ff0000"></div>
+											</div>
+											<div class="col-sm-4">
+												<div class="form-group">
+													<a class="btn" id="vefyMobile">SEND OTP</a>
+												</div>
+											</div>
+											<div class="col-sm-12">
+												<p class="form-group" >Verify your Mobile number via OTP</p>
+											</div>
+											<div class="col-sm-8">
+												<div class="form-group">
+												<input type="hidden" name="playerId" id="playerId" value="{{playerId}}">
+													<input type="text" class="form-control" name="otp" id="otp" placeholder="Enter OTP" data-validation="number">
+													<div id="errorOtp" style="color: #ff0000"></div>
+												</div>
+											</div>
+
+										</div>
+									</div> -->
+									<!-- <div class="col-sm-4">
+									<div class="form-group">
+									<a class="btn">SEND OTP</a>
+								</div>
+							</div> -->
+
+									<!-- <div class="form-group">
+										<p>You currently have a weak password. Please change it with a strong password.</p>
+										<p>Make sure your new password is not same as your email or username.</p>
+									</div>
+									<div class="form-group">
+										<input type="text" class="form-control" placeholder="Change Password">
+									</div>
+									<div class="form-group">
+										<input type="text" class="form-control" placeholder="Confirm Password">
+									</div> -->
+									<div class="form-group text-center">
+										<button class="btn continue">Continue</button>
+									</div>
+								</form>
+
+
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="note">
+									<p><b>Note :</b> We are committed to protecting your personal information.</p>
+									<p>All your personal information is kept confidential and is held on our secure servers.</p>
+									<p>The information that we collect from you is used to provide customer support, process any of your transactions, and for internal analysis purposes.</p>
+									<p>For more information, read our <a href="#">Privacy Policy</a></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="container-fluid">
+					<div class="m-s">
+						<a href="/other/menu/{{ playerId }}"><i class="fa fa-angle-left" aria-hidden="true"></i>
+											Back</a>
+					</div>
+			</div>
+	</
+	<!-- /#wrapper -->
+	{% include "other/footer.html" %}
+	{% block Jscript %}
+	<script src="/dist/js/init.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var host = window.location.origin;
+			// $("#vefyMobile").click(function() {
+			// var number = $("#number").val();
+			// console.log("dsfsd",number);
+		  //   $.ajax({
+      //         url: host + "/other/checkValidMobileNo",
+      //         type: "post",
+      //         data: {number: number },
+      //         success: function(result){
+      //           $("#error").text(result);
+      //        }
+      //       });
+		  // });
+
+		// $("#otp").blur(function(){
+		// 	var otp = $("#otp").val();
+		// 	var playerId = $("#playerId").val();
+		// 	$.ajax({
+    //           url: host + "/other/checkOtp",
+    //           type: "post",
+    //           data: {otp: otp ,playerId:playerId},
+    //           success: function(result){
+    //           	console.log("reerter",result);
+    //           	if(result == 'success'){
+    //           	  $("#errorOtp").hide();
+    //           	}
+    //             $("#errorOtp").text(result);
+    //          }
+    //         });
+		//   });
+		});
+	</script>
+	<script>
+		$.validate({
+			modules : 'location, date, security, file',
+		});
+	</script>
+	{% endblock %}
+</body>
+
+</html>

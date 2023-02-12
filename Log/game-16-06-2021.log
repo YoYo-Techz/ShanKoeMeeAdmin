@@ -1,0 +1,12 @@
+{"message":"Mongoose default connection disconnected","level":"info"}
+{"message":"Initializing Server...","level":"info"}
+{"message":"Loading... App Controllers","level":"info"}
+{"message":"Loading... App Middlewares","level":"info"}
+{"message":"Loading... App Models","level":"info"}
+{"message":"Loading... App Services","level":"info"}
+{"message":"Loading... Router","level":"info"}
+{"message":"Loading... Game Server.","level":"info"}
+{"message":"Initializing Variables","level":"info"}
+{"message":"Loading... DB Connection","level":"info"}
+{"message":"Mongoose default connection open to mongodb+srv://ludofirst:kargan82@ludo.gyzkr.mongodb.net/shan","level":"info"}
+{"message":"Loading... Socket","level":"info"}

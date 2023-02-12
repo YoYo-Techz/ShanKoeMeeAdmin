@@ -1,0 +1,195 @@
+{% extends "partition/layout.html" %}
+
+
+{% block body %}
+
+
+<!-- Main Content -->
+<div class="page-wrapper">
+	<div class="container-fluid">
+
+		<!-- Breadcrumb -->
+		<section class="content-header">
+		    <h1>Entry Fees Settings</h1>
+		    <ol class="breadcrumb">
+		        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+		        <li class="active">Entry Fees Settings </li>
+		    </ol>
+		</section>
+		<!-- /Breadcrumb -->
+
+	</div>
+		<!-- /Title -->
+		{% include "partition/notification.html" %}
+		<!-- Row -->
+		<section class="content">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default card-view">
+						<div class="panel-heading">
+							<div class="pull-left">
+								<h6 class="panel-title txt-dark">Entry Fees Points 13 Settings</h6>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-wrapper collapse in">
+							<div class="panel-body">
+								<div class="table-wrap">
+									<div class="table-responsive">
+										{% if entryFeesSettings %}
+										<form method="POST" action="/entryFees-settings/updateEntryFeesPointsSettings" class="form-horizontal">
+											{% else %}
+											<form method="POST" action="/entryFees-settings/addEntryFeesPointsSettings" class="form-horizontal">
+												{% endif %}
+												<table border="0" class="table display  pb-30">
+													<div class="col-sm-12">
+														<div class="panel-wrapper collapse in">
+															<div class="panel-body">
+															<input type="hidden" name="id" value="{{entryFeesSettings.id}}">
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="username">Entry Fees :</label>
+																<div class="col-sm-6">
+																	<input type="text" class="form-control" id="entryFees" placeholder="Enter Entry Fees"  name="entryFees" value="{{entryFeesSettings.entryFees}}" >
+																</div>
+															</div>
+														
+															</div>
+														</div>
+													</div>
+													<tr>
+														<td colspan="2">
+															<input type="submit" class="btn btn-success btn-lg" value="submit">
+															
+														</td>
+													</tr>
+												</div>
+											</div>
+										</table>
+										</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- /Row -->
+			</div>
+		</section>
+        <section class="content">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default card-view">
+						<div class="panel-heading">
+							<div class="pull-left">
+								<h6 class="panel-title txt-dark">Entry Fees Points 21 Settings</h6>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-wrapper collapse in">
+							<div class="panel-body">
+								<div class="table-wrap">
+									<div class="table-responsive">
+										{% if entryFeesPoint21Settings %}
+										<form method="POST" action="/entryFees-settings/updateEntryFeesPointsTwentyOneSettings" class="form-horizontal">
+											{% else %}
+											<form method="POST" action="/entryFees-settings/addEntryFeesPointsTwentyOneSettings" class="form-horizontal">
+												{% endif %}
+												<table border="0" class="table display  pb-30">
+													<div class="col-sm-12">
+														<div class="panel-wrapper collapse in">
+															<div class="panel-body">
+															<input type="hidden" name="id" value="{{entryFeesPoint21Settings.id}}">
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="username">Entry Fees:</label>
+																<div class="col-sm-6">
+																	<input type="text" class="form-control" id="entryFees" placeholder="Enter Entry Fees"  name="entryFees" value="{{entryFeesPoint21Settings.entryFees}}" >
+																</div>
+															</div>
+																
+															</div>
+														</div>
+													</div>
+													<tr>
+														<td colspan="2">
+															<input type="submit" class="btn btn-success btn-lg" value="submit">
+															
+														</td>
+													</tr>
+												</div>
+											</div>
+										</table>
+										</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- /Row -->
+			</div>
+		</section>
+        <section class="content">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default card-view">
+						<div class="panel-heading">
+							<div class="pull-left">
+								<h6 class="panel-title txt-dark">Entry Fees Points 24 Settings</h6>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-wrapper collapse in">
+							<div class="panel-body">
+								<div class="table-wrap">
+									<div class="table-responsive">
+										{% if entryFeespoint24Settings %}
+										<form method="POST" action="/entryFees-settings/updateEntryFeesPointsTwentyFourSettings" class="form-horizontal">
+											{% else %}
+											<form method="POST" action="/entryFees-settings/addEntryFeesPointsTwentyFourSettings" class="form-horizontal">
+												{% endif %}
+												<table border="0" class="table display  pb-30">
+													<div class="col-sm-12">
+														<div class="panel-wrapper collapse in">
+															<div class="panel-body">
+															<input type="hidden" name="id" value="{{entryFeespoint24Settings.id}}">
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="username">Entry Fees:</label>
+																<div class="col-sm-6">
+																	<input type="text" class="form-control" id="entryFees" placeholder="Enter Entry Fees"  name="entryFees" value="{{entryFeespoint24Settings.entryFees}}" >
+																</div>
+															</div>
+																
+															</div>
+														</div>
+													</div>
+													<tr>
+														<td colspan="2">
+															<input type="submit" class="btn btn-success btn-lg" value="submit">
+															
+														</td>
+													</tr>
+												</div>
+											</div>
+										</table>
+										</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- /Row -->
+			</div>
+		</section>
+{% endblock %}
+
+{% block Jscript %}
+	<script>
+		$(document).ready( function () {
+			var host = window.location.origin;
+		} );
+	</script>
+{% endblock %}

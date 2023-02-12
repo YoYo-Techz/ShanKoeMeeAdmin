@@ -1,0 +1,117 @@
+{% extends "partition/layout.html" %}
+
+
+{% block body %}
+
+
+<!-- Main Content -->
+<div class="page-wrapper">
+	<div class="container-fluid">
+
+		<!-- Breadcrumb -->
+		<section class="content-header">
+		    <h1>Settings</h1>
+		    <ol class="breadcrumb">
+		        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+		        <li class="active">Settings</li>
+		    </ol>
+		</section>
+		<!-- /Breadcrumb -->
+
+	</div>
+		<!-- /Title -->
+		{% include "partition/notification.html" %}
+		<!-- Row -->
+		<section class="content">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default card-view">
+						<div class="panel-heading">
+							<div class="pull-left">
+								<h6 class="panel-title txt-dark">Settings</h6>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-wrapper collapse in">
+							<div class="panel-body">
+								<div class="table-wrap">
+									<div class="table-responsive">
+										{% if setting %}
+										<form method="POST" action="/settings/update" class="form-horizontal">
+											{% else %}
+											<form method="POST" action="/settings/add" class="form-horizontal">
+												{% endif %}
+												<table border="0" class="table display  pb-30">
+													<div class="col-sm-12">
+														<div class="panel-wrapper collapse in">
+															<div class="panel-body">
+															<input type="hidden" name="id" value="{{setting.id}}">
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="username">Current Version:</label>
+																<div class="col-sm-6">
+																	<input type="text" class="form-control" id="currentVersion" placeholder="Enter Latest Version Number"  name="currentVersion" value="{{setting.currentVersion}}" >
+																</div>
+															</div>
+																<!-- <div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="username">Rake Percentage:</label>
+																	<div class="col-sm-6">
+																		<input type="text" class="form-control" id="rakePercenage" placeholder="Enter Rake Percentage" required data-validation="number" name="rakePercenage" value="{{setting.rakePercenage}}" >
+																	</div>
+																</div> -->
+																<!-- <div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="pwd_hr">Default Chips:</label>
+																	<div class="col-sm-6">
+																		<input type="text" class="form-control" id="chips" placeholder="Enter Chips" required data-validation="number" name="chips" value="{{setting.defaultChips}}">
+																	</div>
+																</div> -->
+																<!-- <div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="pwd_hr">Default Diamonds:</label>
+																	<div class="col-sm-6">
+																		<input type="text" class="form-control" id="defaultDiamonds" placeholder="Enter defaultDiamonds" required data-validation="number" name="defaultDiamonds" value="{{setting.defaultDiamonds}}">
+																	</div>
+																</div> -->
+																<!-- <div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="username">Default Rake Amount:</label>
+																	<div class="col-sm-6">
+																		<input type="text" class="form-control" id="rackAmount" placeholder="Enter Default Rake Amount" required data-validation="number" name="rackAmount" value="{{setting.rackAmount}}">
+																	</div>
+																</div> -->
+																<!-- <div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="username">Default Expire Time:</label>
+																	<div class="col-sm-6">
+																		<input type="text" class="form-control" id="expireTime" placeholder="Enter Expire Time" required data-validation="number" name="expireTime" value="{{setting.expireTime}}">
+																	</div>
+																</div> -->
+															</div>
+														</div>
+													</div>
+													<tr>
+														<td colspan="2">
+															<input type="submit" class="btn btn-success btn-lg" value="submit">
+															<!-- <a href="/settings" class="btn btn-info btn-lg">Cancel</a> -->
+														</td>
+													</tr>
+												</div>
+											</div>
+										</table>
+										</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- /Row -->
+			</div>
+		</section>
+
+{% endblock %}
+
+{% block Jscript %}
+	<script>
+		$(document).ready( function () {
+			var host = window.location.origin;
+		} );
+	</script>
+{% endblock %}

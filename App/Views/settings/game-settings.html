@@ -1,0 +1,458 @@
+{% extends "partition/layout.html" %}
+
+
+{% block body %}
+
+
+<!-- Main Content -->
+<div class="page-wrapper">
+	<div class="container-fluid">
+
+		<!-- Breadcrumb -->
+		<section class="content-header">
+		    <h1>Settings Table</h1>
+		    <ol class="breadcrumb">
+		        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+		        <li class="active">Game Settings</li>
+		    </ol>
+		</section>
+		<!-- /Breadcrumb -->
+
+	</div>
+		<!-- /Title -->
+		{% include "partition/notification.html" %}
+		<!-- Row -->
+
+		<section class="content">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="panel panel-default card-view">
+
+								<div class="row">
+
+									<div class="col-md-12">
+										<div class="panel panel-default card-view">
+											<div class="panel-heading">
+												<div class="pull-left">
+													<h6 class="panel-title txt-dark">Lobbies Settings</h6>
+												</div>
+												<div class="clearfix"></div>
+											</div>
+
+											<div class="col-md-6 panel-wrapper collapse in">
+												<div class="panel-body">
+													<div class="row">
+														<div class="col-sm-12 col-xs-12">
+															<div class="form-wrap">
+																<form method="POST" action="/game/settings/addPointsGameSettings" class="form-horizontal">
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-2" for="pointValue">Player In</label>
+																		<div class="col-sm-6">
+																			<input type="text" class="form-control" id="points" placeholder="Enter Amount" required data-validation="number" data-validation-allowing="float" name="points" value="0">
+																		</div>
+																	</div>
+																	
+																	
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-2" for="firstprize">Banker In</label>
+																		<div class="col-sm-6">
+																			<input type="text" class="form-control" id="firstprize" placeholder="Enter Banker" required data-validation="number" name="firstprize" value="0">
+																		</div>
+																	</div>
+																	
+																	<div class="form-group mb-0">
+																		<div class="col-sm-offset-3 col-sm-9">
+																			<button type="submit" class="btn btn-success ">Save</button>
+																		</div>
+																	</div>
+																</form>
+
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-6">
+												<div class="panel-wrapper collapse in">
+													<div class="panel-body">
+														<div class="table-wrap">
+															<div class="table-responsive">
+																<table id="pointsTable" class="table table-bordered table-striped" >
+																	<thead>
+																		<tr>
+																			<th>NO.</th>
+																			<th>Player In</th>
+																			<th>Banker In</th>
+																			<th>Action</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+
+								<!--<div class="row">
+
+									<div class="col-md-12">
+										<div class="panel panel-default card-view">
+											<div class="panel-heading">
+												<div class="pull-left">
+													<h6 class="panel-title txt-dark">Pool Game</h6>
+												</div>
+												<div class="clearfix"></div>
+											</div>
+
+											<div class="col-md-6  panel-wrapper collapse in">
+												<div class="panel-body">
+													<div class="row">
+														<div class="col-sm-12 col-xs-12">
+															<div class="form-wrap">
+																<form method="POST" action="/game/settings/addPoolGameSettings" class="form-horizontal">
+																	<div class="form-group">
+																	    <label class="control-label mb-10 col-sm-2" for="selectScore">Select Score</label>
+																	    <div class="col-sm-6">
+																	    	<select class="form-control" id="selectScore" name="selectScore" data-validation="required">
+																	    	  <option>101</option>
+																	    	  <option>201</option>
+																	    	</select>
+																	    </div>
+																	</div>
+																	<div class="form-group">
+																	    <label class="control-label mb-10 col-sm-2" for="selectPlayers">Select Players</label>
+																	    <div class="col-sm-6">
+																	    	<select class="form-control" id="selectPlayers" name="selectPlayers" data-validation="required">
+																	    	  <option>2</option>
+																	    	  <option>6</option>
+																	    	</select>
+																	    </div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-2" for="pointValue">Entry Fee:</label>
+																		<div class="col-sm-6">
+																			<input type="text" class="form-control" id="entryFee" placeholder="Enter entry Fee" required data-validation="number" data-validation-allowing="float" name="entryFee" value="{{gameSettings.entryFee}}">
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-2" for="pointValue">Rack Percentage:</label>
+																		<div class="col-sm-6">
+																			<input type="text" class="form-control" id="rack" placeholder="Enter Rack Percentage" required data-validation="number" name="rack" value="10">
+																		</div>
+																	</div>
+																	 <div class="form-group">
+																		<label class="control-label mb-10 col-sm-2" for="pointValue">Prize:</label>
+																		<div class="col-sm-6">
+																			<input type="text" class="form-control" id="prize" placeholder="Enter Prize Amount" required data-validation="number" data-validation-allowing="float" name="prize" value="{{gameSettings.prize}}">
+																		</div>
+																	</div> 
+																	<div class="form-group mb-0">
+																		<div class="col-sm-offset-3 col-sm-9">
+																			<button type="submit" class="btn btn-success ">Save</button>
+																		</div>
+																	</div>
+																</form>
+
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-6">
+												<div class="panel-wrapper collapse in">
+													<div class="panel-body">
+														<div class="table-wrap">
+															<div class="table-responsive">
+																<table id="poolTable" class="table table-bordered table-striped" >
+																	<thead>
+																		<tr>
+																			<th>No.</th>
+																			<th>Score</th>
+																			<th>players</th>
+																			<th>Entry Fee</th>
+																			<th>Rack %</th>
+																			 <th>Prize</th>
+																			<th>Action</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+
+								<div class="row">
+
+									<div class="col-md-12">
+										<div class="panel panel-default card-view">
+											<div class="panel-heading">
+												<div class="pull-left">
+													<h6 class="panel-title txt-dark">Deals Game</h6>
+												</div>
+												<div class="clearfix"></div>
+											</div>
+
+											<div class="col-md-6 panel-wrapper collapse in">
+												<div class="panel-body">
+													<div class="row">
+														<div class="col-sm-12 col-xs-12">
+															<div class="form-wrap">
+																<form method="POST" action="/game/settings/addDealGameSettings" class="form-horizontal">
+																	<div class="form-group">
+																	    <label class="control-label mb-10 col-sm-2" for="selectDeals">Select Deals</label>
+																	    <div class="col-sm-6">
+																	    	<select class="form-control" id="selectDeals" name="selectDeals" data-validation="required">
+																	    	  <option>2</option>
+																	    	  <option>3</option>
+																	    	  <option>6</option>
+																	    	</select>
+																	    </div>
+																	</div>
+																	<div class="form-group">
+																	    <label class="control-label mb-10 col-sm-2" for="selectPlayers">Select Players</label>
+																	    <div class="col-sm-6">
+																	    	<select class="form-control" id="selectPlayers" name="selectPlayers" data-validation="required">
+																	    	  <option>2</option>
+																	    	  <option>6</option>
+																	    	</select>
+																	    </div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-2" for="pointValue">Entry Fee:</label>
+																		<div class="col-sm-6">
+																			<input type="text" class="form-control" id="entryFee" placeholder="Enter entry Fee" required data-validation="number" data-validation-allowing="float" name="entryFee" value="{{gameSettings.entryFee}}">
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-2" for="pointValue">Rack Percentage:</label>
+																		<div class="col-sm-6">
+																			<input type="text" class="form-control" id="rack" placeholder="Enter Rack Percentage" required data-validation="number" name="rack" value="10">
+																		</div>
+																	</div>
+																	< <div class="form-group">
+																		<label class="control-label mb-10 col-sm-2" for="pointValue">Prize:</label>
+																		<div class="col-sm-6">
+																			<input type="text" class="form-control" id="prize" placeholder="Enter Prize Amount" required data-validation="number" data-validation-allowing="float" name="prize" value="{{gameSettings.prize}}">
+																		</div>
+																	</div>
+																	<div class="form-group mb-0">
+																		<div class="col-sm-offset-3 col-sm-9">
+																			<button type="submit" class="btn btn-success ">Save</button>
+																		</div>
+																	</div>
+																</form>
+
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-6">
+												<div class="panel-wrapper collapse in">
+													<div class="panel-body">
+														<div class="table-wrap">
+															<div class="table-responsive">
+																<table id="dealTable" class="table table-bordered table-striped" >
+																	<thead>
+																		<tr>
+																			<th>No.</th>
+																			<th>Deal</th>
+																			<th>players</th>
+																			<th>Entry Fee</th>
+																			<th>Rack %</th>
+																			 <th>Prize</th> 
+																			<th>Action</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+
+								</div>-->
+
+							</div>
+						</div>
+					</div>
+				</section>
+
+{% endblock %}
+
+{% block Jscript %}
+	<script>
+
+		$(document).ready( function () {
+			var host = window.location.origin;
+			var points = $('#pointsTable').DataTable({
+				"processing": true,
+				"serverSide": true,
+				"searching": false,
+				"ordering": false,
+				"autoWidth": false,
+				"pageLength": 10,
+				"order": [[ 1, 'asc' ]],
+				"ajax": host + "/game/settings/getPointsGameSettings",
+				"columns": [
+					{ "data": null },
+					{ "data": "points" },
+					{ "data": "firstprize" },
+					{
+						"data": "action",
+						render : function(data, type, row){
+							return '<button type="button" name="delete" id="'+row._id+'" class="btn btn-danger btn-xs delete"><i class="fa fa-trash" aria-hidden="true"></i></button> '
+						}
+					}
+
+				]
+			});
+			points.on('draw.dt', function () {
+			    var info = points.page.info();
+			    points.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
+			        cell.innerHTML = i + 1 + info.start;
+			    });
+			});
+
+			var pool = $('#poolTable').DataTable({
+				"processing": true,
+				"serverSide": true,
+				"searching": false,
+				"ordering": false,
+				"autoWidth": false,
+				"pageLength": 10,
+				"order": [[ 1, 'asc' ]],
+				"ajax": host + "/game/settings/getPoolGameSettings",
+				"columns": [
+					{ "data": null },
+					{ "data": "score" },
+					{ "data": "players" },
+					{ "data": "entryFee" },
+					{ "data": "rack" },
+					// { "data": "prize" },
+					{
+						"data": "action",
+						render : function(data, type, row){
+							return '<button type="button" name="delete" id="'+row._id+'" class="btn btn-danger btn-xs delete"><i class="fa fa-trash" aria-hidden="true"></i></button> '
+						}
+					}
+				]
+			});
+			pool.on('draw.dt', function () {
+			    var info = pool.page.info();
+			    pool.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
+			        cell.innerHTML = i + 1 + info.start;
+			    });
+			});
+
+			var deal = $('#dealTable').DataTable({
+				"processing": true,
+				"serverSide": true,
+				"searching": false,
+				"ordering": false,
+				"autoWidth": false,
+				"pageLength": 10,
+				"order": [[ 1, 'asc' ]],
+				"ajax": host + "/game/settings/getDealGameSettings",
+				"columns": [
+					{ "data": null},
+					{ "data": "deals" },
+					{ "data": "players" },
+					{ "data": "entryFee" },
+					{ "data": "rack" },
+					// { "data": "prize" },
+					{
+						"data": "action",
+						render : function(data, type, row){
+							return '<button type="button" name="delete" id="'+row._id+'" class="btn btn-danger btn-xs delete"><i class="fa fa-trash" aria-hidden="true"></i></button> '
+						}
+					}
+				]
+			});
+			deal.on('draw.dt', function () {
+			    var info = deal.page.info();
+			    deal.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
+			        cell.innerHTML = i + 1 + info.start;
+			    });
+			});
+
+
+		} );
+
+		$(function() {
+			"use strict";
+
+			var SweetAlert = function() {};
+
+			SweetAlert.prototype.init = function() {
+
+				//Parameter
+				$('body').on('click', '.delete', function(e){
+					var host = window.location.origin;
+					var id = $(this).attr('id');
+					var thisElement = this;
+						swal({
+								title: "Are you sure?",
+								text: "You will not be able to recover this Setting!",
+								type: "warning",
+								showCancelButton: true,
+								confirmButtonColor: "#e69a2a",
+								confirmButtonText: "Yes, delete it!",
+								cancelButtonText: "No, cancel plx!",
+								closeOnConfirm: false,
+								closeOnCancel: false
+						}, function(isConfirm){
+								if (isConfirm) {
+									$.ajax({
+										type: 'POST',
+										url: host + "/game/settings/deleteGameSettings",
+										data: {id: id},
+										success: function(resultData) {
+											// alert(resultData)
+											console.log(resultData);
+											if (resultData == 'success') {
+												$(thisElement).parent().parent().hide(700);
+												swal("Deleted!", "Your imaginary file has been deleted.", "success");
+											}else {
+													alert("Something went wrong")
+											}
+											// alert("Save Complete")
+										}
+									});
+										swal("Deleted!", "Setting Deleted Succesfully.", "success");
+										location.reload();
+								} else {
+										swal("Cancelled", "Setting Not Deleted)", "error");
+								}
+						});
+						return false;
+				});
+
+			},
+			$.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert;
+
+			$.SweetAlert.init();
+		});
+	</script>
+{% endblock %}

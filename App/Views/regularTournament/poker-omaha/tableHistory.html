@@ -1,0 +1,259 @@
+{% extends "partition/layout.html" %}
+
+{% block body %}
+{{session}}
+
+<!-- Main Content -->
+<div class="page-wrapper">
+	<div class="container-fluid">
+
+		<!-- Title -->
+		<div class="row heading-bg">
+			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+				<h5 class="txt-dark">Regulay Tournament</h5>
+			</div>
+			<!-- Breadcrumb -->
+			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+				<ol class="breadcrumb">
+					<li><a href="/">Dashboard</a></li>
+					<li><a href="/regular-tournament/omaha"><span>Game Master</span></a></li>
+					<li><a href="#"><span>Game History</span></a></li>
+				</ol>
+			</div>
+			<!-- /Breadcrumb -->
+		</div>
+		<!-- /Title -->
+		{% include "partition/notification.html" %}
+		<!-- Row -->
+		<!-- Row -->
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="panel panel-default card-view">
+					<div class="panel-wrapper collapse in">
+						<div class="panel-body">
+							<div  class="tab-struct custom-tab-1 product-desc-tab">
+								<ul role="tablist" class="nav nav-tabs nav-tabs-responsive" id="myTabs_7">
+									<li class="active" role="presentation"><a aria-expanded="true"  data-toggle="tab" role="tab" id="descri_tab" href="#descri_tab_detail"><h4>Player</h4></a></li></ul>
+									<div class="tab-content" id="myTabContent_7">
+										<div  id="descri_tab_detail" class="tab-pane fade active in pt-0" role="tabpanel">
+											<div class="panel-wrapper collapse in">
+												<div class="panel-body">
+
+													<div class="table-wrap">
+														<div class="table-responsive">
+															<table id="myTable" class="table table-hover display  pb-30" >
+																<thead>
+																	<tr>
+																		<th>playerName</th>
+																		<th>Chips</th>
+																		<th>Status</th>
+																		<th>ProfilePicId</th>
+																		<th>SeatIndex</th>
+																		<th>AllIn</th>
+																		<th>AutoBuyin</th>
+																		<th>DefaultActionCount</th>
+																		<th>Blind</th>
+																		<th>SideshowRequested</th>
+																		<th>BuyInAmount</th>
+																		<th>Bot</th>
+																	</tr>
+																</thead>
+																<tbody>
+
+																	{% for player in players %}
+																	<tr>
+																		<td>{{ player.playerName }}</td>
+																		<td>{{ player.chips }}</td>
+																		<td>{{ player.status }}</td>
+																		<td>{{ player.profilePicId }}</td>
+																		<td>{{ player.seatIndex }}</td>
+																		<td>{{ player.allIn }}</td>
+																		<td>{{ player.autoBuyin }}</td>
+																		<td>{{ player.defaultActionCount }}</td>
+																		<td>{{ player.blind }}</td>
+																		<td>{{ player.sideshowRequested }}</td>
+																		<td>{{ player.buyInAmount }}</td>
+																		<td>{{ player.cards|safe }}</td>
+																	</tr>
+																	{% endfor %}
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Row -->
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default card-view">
+						<div class="panel-wrapper collapse in">
+							<div class="panel-body">
+								<div  class="tab-struct custom-tab-1 product-desc-tab">
+									<ul role="tablist" class="nav nav-tabs nav-tabs-responsive" id="myTabs_7">
+										<li class="active" role="presentation"><a aria-expanded="true"  data-toggle="tab" role="tab" id="descri_tab" href="#descri_tab_detail"><h4>Winner</h4></a></li></ul>
+										<div class="tab-content" id="myTabContent_7">
+											<div  id="descri_tab_detail" class="tab-pane fade active in pt-0" role="tabpanel">
+												<div class="panel-wrapper collapse in">
+													<div class="panel-body">
+
+														<div class="table-wrap">
+															<div class="table-responsive">
+																<table id="myTable" class="table table-hover display  pb-30" >
+																	<thead>
+																		<tr>
+																			<th>playerName</th>
+																			<th>chips</th>
+																			<th>winningType</th>
+																			<th>hand</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		{% for winner in winners %}
+																		<tr>
+																			<td>{{ winner.playerName }}</td>
+																			<td>{{ winner.chips }}</td>
+																			<td>{{ winner.winningType }}</td>
+																			<td>{{ winner.hand|safe }}</td>
+																		</tr>
+																		{% endfor %}
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="panel panel-default card-view">
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div  class="tab-struct custom-tab-1 product-desc-tab">
+										<ul role="tablist" class="nav nav-tabs nav-tabs-responsive" id="myTabs_7">
+											<li class="active" role="presentation"><a aria-expanded="true"  data-toggle="tab" role="tab" id="descri_tab" href="#descri_tab_detail"><h4>Deck</h4></a></li></ul>
+											<div class="tab-content" id="myTabContent_7">
+												<div  id="descri_tab_detail" class="tab-pane fade active in pt-0" role="tabpanel">
+													<div class="panel-wrapper collapse in">
+														<div class="panel-body">
+
+															<div class="table-wrap">
+																<div class="table-responsive">
+																	<table id="myTable" class="table table-hover display  pb-30" >
+																		{% for game in games.deck %}
+																		<tbody>
+																			<tr>
+																				{{ game|safe }}
+																			</tr>
+																		</tbody>
+																		{% endfor %}
+																	</table>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="panel panel-default card-view">
+								<div class="panel-wrapper collapse in">
+									<div class="panel-body">
+										<div  class="tab-struct custom-tab-1 product-desc-tab">
+											<ul role="tablist" class="nav nav-tabs nav-tabs-responsive" id="myTabs_7">
+												<li class="active" role="presentation"><a aria-expanded="true"  data-toggle="tab" role="tab" id="descri_tab" href="#descri_tab_detail"><h4>History</h4></a></li></ul>
+												<div class="tab-content" id="myTabContent_7">
+													<div  id="descri_tab_detail" class="tab-pane fade active in pt-0" role="tabpanel">
+														<div class="panel-wrapper collapse in">
+															<div class="panel-body">
+
+																<div class="table-wrap">
+																	<div class="table-responsive">
+																		<table id="myTable" class="table table-hover display  pb-30" >
+																			<thead>
+																				<tr>
+																					<th>playerName</th>
+																					<th>betAmount</th>
+																					<th>totalBetAmount</th>
+																					<th>playerAction</th>
+																					<th>remaining</th>
+																					<th>gameRound</th>
+																				</tr>
+																			</thead>
+																			<tbody>
+																				{% for history in historys %}
+																				<tr>
+																					<td>{{ history.playerName }}</td>
+																					<td>{{ history.betAmount }}</td>
+																					<td>{{ history.totalBetAmount }}</td>
+																					<td>
+																						{% if history.playerAction == '0'  %}
+																						SmallBlind
+																						{% elif history.playerAction == '1' %}
+																						BigBlind
+																						{% elif history.playerAction == '2' %}
+																						Show
+																						{% elif history.playerAction == '3' %}
+																						Bet
+																						{% elif history.playerAction == '4' %}
+																						AllIn
+																						{% elif history.playerAction == '6' %}
+																						Fold
+																						{% elif history.playerAction == '9' %}
+																						SideShow
+																						{% endif %}
+																					</td>
+																					<td>{{ history.remaining }}</td>
+																					<td>{{ history.gameRound }}</td>
+																				</tr>
+																				{% endfor %}
+																			</tbody>
+																		</table>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						{% endblock %}
+
+						{% block Jscript %}
+						<script>
+
+						</script>
+						{% endblock %}

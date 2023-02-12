@@ -1,0 +1,118 @@
+{% extends "partition/layout.html" %}
+
+
+{% block body %}
+
+		<!-- Main Content -->
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<!-- Title -->
+				<section class="content-header">
+				    <h1>TDS</h1>
+				    <ol class="breadcrumb">
+				        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+				        <li class="active" href="/player">TDS</li>
+				    </ol>
+				</section>
+				<!-- /Title -->
+				{% include "partition/notification.html" %}
+				<!-- Row -->
+				<section class="content">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="panel panel-default card-view">
+								<div class="panel-heading">
+									<div class="pull-left">
+										<h6 class="panel-title txt-dark"></h6>
+
+									<div class="clearfix"></div>
+								</div>
+								<div class="panel-wrapper collapse in">
+									<div class="panel-body">
+										<div class="table-wrap">
+											<div class="table-responsive">
+												<table id="myTable" class="table table-bordered table-striped" >
+													<thead>
+														<tr>
+															<th>Game Id</th>
+															<th>Player Name</th>
+															<th>Game Type</th>
+															<th>Winner Amount</th>
+															<th>TDS</th>
+															<th>After Winner Amount</th>
+															<th>Date</th>
+															<!-- <th>Action</th> -->
+														</tr>
+													</thead>
+													<tbody>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+
+
+{% endblock %}
+
+{% block Jscript %}
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+<!-- <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> -->
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<!-- <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script>
+
+$(document).ready( function () {
+	var host = window.location.origin;
+	$('#myTable').DataTable({
+		"dom": 'Blfrtip',
+    "buttons": [
+      'copy', 'csv', 'excel', 'pdf', 'print'
+    ],
+		"oLanguage": {
+			"sSearch": "Search GameID and Username: "
+		},
+		// "scrollX": true,
+		"processing": true,
+		"serverSide": true,
+		// "searching": false,
+		"ordering": false,
+		"autoWidth": true,
+		"aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+		"iDisplayLength": 100,
+		"ajax": host + "/getTdsList",
+		"columns": [
+			
+			{ "data": "gameid",
+			render : function(data, type, row){
+					if(row.gameid==undefined)
+					{
+						return '';
+					}else{
+					return '<a href="/game/history/particularGameHistory/'+row.gameid+'">'+row.gameid+'</a> '
+					}
+				}
+			},
+			{ "data" : "username"},
+			{ "data": "gameType" },
+			{ "data": "winnerAmount" },
+			{ "data" : "tds" },
+			{ "data" : "afterWinAmount" },
+			{ "data": "createdAt"},
+		]
+	});
+} );
+
+</script>
+{% endblock %}

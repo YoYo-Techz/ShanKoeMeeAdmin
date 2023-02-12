@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "other/header.html" %}
+<body>
+
+	<section>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12 m-s">
+					<h2 class="page-title">Update Mobile Number</h2>
+						<div class="profiles">
+							<form action="/other/changeEmail" method="post">
+							<div class="responsive_id_proof_popup_body_mobile yellow_background">
+								<div class="responsive_id_proof_popup_label_mobile">
+									<div class="responsive_id_proof_popup_main_text alert-mob-verify">Old Mobile Number : <span class="old_mob_no">{{data.mobile}}</span></div>
+								</div>
+								<div class="mob_yellow_padding">
+									<div class="responsive_id_proof_popup_label_mobile otp_yellow_bk update-bg ">
+									<input type="hidden" name="id" value="{{data._id}}">
+										<div class="update_input_padd">
+										 <input type="text" tabindex="-1" minlength="10" maxlength="10" placeholder="New Mobile Number" name="mobile" class="txt_otp update_input" id="txt_newmobile" data-validation="number">
+											<div class="update_no_feedback responsive_id_proof_popup_main_text alert-mob-verify red_error">
+											</div>
+											<div class="btn_otp_both update_re_btn">
+												<div class="btn_otp_colum">
+													<button type="submit" class="btn_blue btn_save_mob_no equal_width save_otp" tabindex="0">Save</button>
+												</div>
+
+												<div class="btn_otp_colum1">
+													<div class="responsive_id_proof_cancel_btn_grey_mobile  equal_width bck_otp btn_backto_otp" tabindex="0">
+													<a href="/other/profile/{{data._id}}" title="">Back</a></div>
+												</div>
+											</div></div>
+											<div class="responsive_id_proof_popup_label_mobile">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							</form>
+						</div>
+					</div>
+				</section>
+					{% include "other/footer.html" %}
+					{% block Jscript %}
+					<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+				<script>
+
+					 $.validate({
+					    modules : 'security',
+
+					  });
+	</script>
+					{% endblock %}
+				</body>
+
+				</html>

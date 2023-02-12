@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "other/header.html" %}
+
+<body>
+						<section>
+							<div class="container-fluid">
+								<div class="row">
+									<div class="col-md-12">
+										<h2 class="page-title">Profile</h2>
+
+										<div class="profile">
+
+											<h4><i class="fa fa-user" aria-hidden="true"></i> Account Details</h4>
+											<div class="col-sm-12 col-md-8 col-lg-6 ">
+												<div class="row">
+													<div class="col-sm-6">
+														<div class="proDetail">
+															<div class="proDetail-img"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+															<ul class="proDetail-right">
+																<li>Email ID
+																	{% if user.emailverified == true %}
+																	  <span class="proDetail-icon"><i class="fa fa-check-circle" aria-hidden="true"></i></span>
+																	{% else %}
+																	  <span class="proDetail-icon"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></span>
+																	{% endif %}
+
+																</li>
+																<li>{{user.email}}</li>
+																<li>
+																	{% if user.emailverified != true %}
+																	  <a href="/other/viewEmail/{{user.id}}">Change</a>
+																	{% endif %}
+
+																</li>
+															</ul>
+															<div class="clearfix"></div>
+														</div>
+													</div>
+													<div class="col-sm-6">
+														<div class="proDetail">
+															<div class="proDetail-img"><i class="fa fa-mobile" aria-hidden="true"></i></div>
+															<ul class="proDetail-right">
+																<li>Mobile <span class="proDetail-icon"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></span></li>
+																<li>{{user.mobile}}</li>
+																<li><a href="/other/addMobile/{{user.id}}">Add Number</a></li>
+															</ul>
+															<div class="clearfix"></div>
+														</div>
+													</div>
+
+
+												</div>
+
+												<div class="row">
+													<div class="col-sm-6">
+													 <div class="proDetail">
+														 <div class="proDetail-img"><i class="fa fa-key" aria-hidden="true"></i></div>
+														 <ul class="proDetail-right">
+															 <li>User Name </li>
+															 <li>{{user.username}}</li>
+															 <li>
+															 <a href="/other/username/{{user.id}}">Change</a></li>
+														 </ul>
+														 <div class="clearfix"></div>
+													 </div>
+													 <!-- <a href="#" class="btn disconnect-fb">Disconnect Facebook</a> -->
+												 </div>
+												 <div class="col-sm-6">
+													<div class="proDetail">
+														<div class="proDetail-img"><i class="fa fa-key" aria-hidden="true"></i></div>
+														<ul class="proDetail-right">
+															<li>Change Password </li>
+															<li>
+															<a href="/other/changePassword/{{user.id}}">Change</a></li>
+														</ul>
+														<div class="clearfix"></div>
+													</div>
+													<!-- <a href="#" class="btn disconnect-fb">Disconnect Facebook</a> -->
+												</div>
+												</div>
+
+												<!-- <div class="row">
+													<div class="col-sm-12">
+														<h4 class="bdb-grey"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Personal Information</h4>
+														<ul class="personal-info">
+															<table>
+																	<tr>
+																		<td>Name:</td>
+																		<td>{{user.first_name}}{{user.last_name}}</td>
+																	</tr>
+																	<tr>
+																		<td>Date of Birth:</td>
+																		<td>{{user.birth_date}}</td>
+																	</tr>
+																	<tr>
+																		<td>Gender:</td>
+																		<td>{{user.gender}}</td>
+																	</tr>
+																	<tr>
+																		<td>Address:</td>
+																		<td>{{user.address}}<a href="#" title="" class="address-detail">
+																		Add Address Details</td>
+																	</tr>
+																	<tr>
+																		<td>Location:</td>
+																		<td>Not Available</td>
+																	</tr>
+															</table>
+															<br> -->
+															<!-- <li><span>Name :</span>{{user.first_name}}{{user.last_name}}</li>
+															<li><span>Date of Birth :</span>{{user.birth_date}}</li>
+															<li><span>Gender :</span>{{user.gender}}</li>
+															<li><span>Address :</span>{{user.address}}
+															<!-- <a href="#" class="address-detail" data-toggle="modal" data-target="#myaddress"> -->
+															<!-- <a href="#" title="" class="address-detail"> -->
+															<!-- Add Address Details</a></li>
+															<li><span>Location :</span> 	Not Available</li> -->
+														<!-- </ul>
+													</div>
+												</div> -->
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+						<div class="container-fluid">
+					<div class="m-s">
+						<a href="/other/menu/{{user.id}}"><i class="fa fa-angle-left" aria-hidden="true"></i>
+											Back</a>
+					</div>
+			</div>
+						<div class="container">
+						  <!-- Modal -->
+						  <div class="modal fade" id="myaddress" role="dialog">
+						    <div class="modal-dialog">
+
+						      <!-- Modal content-->
+						      <div class="modal-content">
+						        <div class="modal-header">
+						          <button type="button" class="close" data-dismiss="modal">&times;</button>
+						          <h4 class="modal-title">Address </h4>
+						        </div>
+						        <div class="modal-body">
+						        <form action="/other/changeEmail" method="post">
+						        <div style="text-align: center;">
+						        <input type="hidden" id="id" name="id" value="{{user.id}}">
+						          <input type="text" name="address" required="" style="color: #000000">
+						          <br><br>
+						          <button type="submit" class="btn btn-success">Submit</button>
+						        </div>
+						        </form>
+						        </div>
+						        <div class="modal-footer">
+						          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						        </div>
+						      </div>
+
+						    </div>
+						  </div>
+
+						</div>
+
+    <!-- /#wrapper -->
+	  {% include "other/footer.html" %}
+    {% block Jscript %}{% endblock %}
+</body>
+
+</html>

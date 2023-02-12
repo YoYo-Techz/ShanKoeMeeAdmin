@@ -1,0 +1,148 @@
+{% extends "partition/layout.html" %}
+
+
+{% block body %}
+
+
+<!-- Main Content -->
+<div class="page-wrapper">
+	<div class="container-fluid">
+
+		<section class="content-header">
+		    <h1>User Profile </h1>
+		    <ol class="breadcrumb">
+		        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+		        <li class="active">User profile</li>
+		    </ol>
+		</section>
+
+		{% include "partition/notification.html" %}
+		<!-- Row -->
+		<section class="content">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default card-view">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="panel panel-default card-view">
+									<div class="panel-heading">
+										<div class="pull-left">
+											<h6 class="panel-title txt-dark">Edit Profile</h6>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+									<div class="panel-wrapper collapse in">
+										<div class="panel-body">
+											<div class="row">
+												<div class="col-sm-12 col-xs-12">
+													<div class="form-wrap">
+														<form class="form-horizontal" action="/profile/update" method="post">
+														<input type="hidden" name="id" value="{{user.id}}">
+															<div class="form-group">
+																<label for="exampleInputuname_3" class="col-sm-3 control-label">Fullname*</label>
+																<div class="col-sm-9">
+																	<div class="input-group">
+																		<div class="input-group-addon"><i class="glyphicon glyphicon-user"></i></div>
+																		<input type="text" class="form-control" id="name" placeholder="Enter name" required name="name" value="{{user.name}}" data-validation="length required" 
+																		data-validation-length="" 
+																		data-validation-error-msg="Username is required">
+																	</div>
+																</div>
+															</div>
+															<div class="form-group">
+																<label  for="exampleInputEmail_3" class="col-sm-3 control-label">Email*</label>
+																<div class="col-sm-9">
+																	<div class="input-group">
+																		<div class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></div>
+																		<input type="email" class="form-control" required name="email" id="email" value="{{user.email}}" data-validation="email">
+																	</div>
+																</div>
+															</div>
+															<div class="form-group mb-0">
+																<div class="col-sm-offset-3 col-sm-9">
+																	<button type="submit" class="btn btn-success ">Update</button>
+																</div>
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>	
+							</div>
+							
+							<div class="col-md-6">
+								<div class="panel panel-default card-view">
+									<div class="panel-heading">
+										<div class="pull-left">
+											<h6 class="panel-title txt-dark">Change Password</h6>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+									<div class="panel-wrapper collapse in">
+										<div class="panel-body">
+											<div class="row">
+												<div class="col-sm-12 col-xs-12">
+													<div class="form-wrap">
+														<form class="form-horizontal" action="/profile/changePwd" method="post">
+														<input type="hidden" name="id" value="{{user.id}}">
+															<div class="form-group">
+																<label for="exampleInputuname_4" class="col-sm-3 control-label">New Password*</label>
+																<div class="col-sm-9">
+																	<div class="input-group">
+																	<div class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></div>
+																		<input type="password" class="form-control" id="password" placeholder="Enter password" name="pass_confirmation" data-validation="length" data-validation-length="min6">
+																	</div>
+																</div>
+															</div>
+															<div class="form-group">
+																<label for="exampleInputEmail_4" class="col-sm-3 control-label">Confirm Password*</label>
+																<div class="col-sm-9">
+																	<div class="input-group">
+																	<div class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></div>
+																		<input type="password" class="form-control" placeholder="Enter Confirm Password" name="pass"  data-validation="confirmation">
+																		
+																	</div>
+																</div>
+															</div>
+															<div class="form-group mb-0">
+																<div class="col-sm-offset-3 col-sm-9">
+																	<button type="submit" class="btn btn-success ">Chnage Password</button>
+																</div>
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>	
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- /Row -->
+	</div>
+
+	{% endblock %}
+
+	{% block Jscript %}
+	<script>
+		$(document).ready( function () {
+			var host = window.location.origin;
+		} );
+
+		 $.validate({
+		    modules : 'security',
+		    onModulesLoaded : function() {
+		      // Show strength of password
+		      $('input[name="pass_confirmation"]').displayPasswordStrength();
+		    }
+		  });
+	</script>
+
+	{% endblock %}

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "other/header.html" %}
+<body>
+{% if (success.length > 0) %}
+<div class="alert alert-success alert-dismissable notifications">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>{{success}}
+</div>
+{% endif %}
+{% if (error.length > 0) %}
+<div class="alert alert-danger alert-dismissable notifications">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>{{error}}
+</div>
+{% endif %}
+	<section>
+		<div class="container-fluid">
+		<form action="/other/postDocument/{{ id }}" method="post" encType="multipart/form-data">
+			<div class="row">
+				<div class="col-md-12">
+					<h2 class="page-title">Upload Documents</h2>
+					<div class="withdraw-cash">
+						<div class="row">
+							<div class="col-sm-8">
+								<p>Upload both sides of aadhaar Card or any other Address Proof where your Name.Date of Birth & Address is cleariy visible.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+							<div class="col-md-12">
+								<div class="uplod_doc">
+								<div class="col-xs-6 col-md-6 col-sm-6 m-3">
+
+							<label class="btn btn-success r-10 mr-2 active">
+                                            <input type="radio" name="options" id="option111" checked=""> Aadhar Card
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-6 col-md-6 col-sm-6 m-3">
+                                        <label class="btn btn-success r-10 mr-2 active">
+                                            <input type="radio" name="options" id="option111" checked="">Passport
+                                        </label>
+                              </div>
+                          </div>
+                          </div>
+                          <div class="col-md-12">
+                          	<div class="uplod_doc">
+                              <div class="col-xs-6 col-md-6 col-sm-6 m-3">
+                                        <label class="btn btn-success r-10 mr-2 active">
+                                            <input type="radio" name="options" id="option111" checked="">Driving License
+                                        </label>
+                                    </div>
+                               <div class="col-xs-6 col-md-6 col-sm-6 m-3">
+                                        <label class="btn btn-success r-10 mr-2 active">
+                                            <input type="radio" name="options" id="option111" checked=""> Voter Id Card
+                                        </label>
+                               </div>
+                               </div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="drop_down">
+						<div class="col-md-6">
+                                <div class="form-group focused">
+                                    <label for="exampleFormControlSelect4">Select Other Document</label>
+                                   	<select class="form-control" name="otherDocument" id="exampleFormControlSelect4">
+																			<option>Electricity Bill & PAN Card</option>
+																			<option>Telephone/Mobile Bill & PAN Card</option>
+																			<option>Bank Account Statement & PAN Card</option>
+																			<option>Bank Passbook & PAN Card</option>
+																			<option>Ration Card & PAN Card</option>
+																		</select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+		<!-- 	<a href="#" class="btn btn-lg btn-block btn-social facebook">
+				<i class="fa fa-camera" aria-hidden="true"></i>
+				TAKE A PHOTO
+			</a>
+
+			<a href="#" class="btn btn-lg btn-block btn-social facebook">
+				<i class="fa fa-file" aria-hidden="true"></i>SELECT FILES
+			</a> -->
+			<div class="upload">
+
+				<span class="text-danger">*File should be image</span><input type="file" name="take_photo" class="btn btn-lg btn-block btn-social facebook" required>
+				<span class="text-danger">*File should be pdf</span><input type="file" name="document" class="btn btn-lg btn-block btn-social facebook" required>
+			</div>
+			<br><br>
+			<button class="btn btn-lg btn-block btn-social facebook" id="submitDocs">
+				Submit
+			</button>
+			<img id="loadingImg" src="/other/img/loading.gif" alt="">
+		</div>
+		</form>
+	</div>
+
+</section>
+<div class="m-s">
+	<a href="/other/menu/{{ id }}"><i class="fa fa-angle-left" aria-hidden="true"></i>
+		Back</a>
+	</div>
+
+<!-- /#wrapper -->
+{% include "other/footer.html" %}
+{% block Jscript %}
+
+<script>
+  setTimeout(function(){
+    $('.notifications').slideUp('slow');
+    var cells =  $('.notifications');
+    setTimeout(function(){
+      cells.remove();
+    },1000);
+  },5000);
+
+	$(document).ready(function(){
+		$('#loadingImg').hide();
+		$('#submitDocs').click(function(){
+			$('#submitDocs').hide()
+			$('#loadingImg').show();
+
+		});
+	});
+</script>
+{% endblock %}
+</body>
+
+</html>

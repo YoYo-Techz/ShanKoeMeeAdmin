@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "other/header.html" %}
+<body>
+						<section>
+							<div class="container-fluid">
+								<div class="row">
+									<div class="col-md-12">
+										<h2 class="page-title">Transactions</h2>
+										<div class="profile">
+											<div class="col-sm-12 col-md-8 col-lg-8 ">
+												<div class="transactions">
+													<div class="all-trans">
+													<form action="" method="get">
+														<select class="form-control" name="transaction" onclick="this.form.submit();">
+															<option value="all">All Transactions</option>
+															<option value="d&w">Deposits and Withdrawals</option>
+															<option value="game">Game Transactions</option>
+															<option value="4">Bonuses</option>
+															<option value="5">Cash offer and Cashback</option>
+															<option value="6">Other Transactions</option>
+														</select>
+													</form>
+													</div>
+													<input type="hidden" id="seletedValue" value="{{value}}">
+													<div class="transaction-table table-responsive">
+														<table class="table table-bordered" id="myTable">
+															<thead>
+																<tr>
+																	<th>Date & Time	</th>
+																	<th>Description</th>
+																	<th>Transaction Amount</th>
+																	<th>Net Balance</th>
+																	<th>Withdrawable Balance</th>
+																</tr>
+															</thead>
+															<tbody>
+															</tbody>
+														</table>
+														<div class="not-transction">You do not have any transactions in your account</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+						<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="withdraw-cash">
+								<div class="row">
+									<div class="col-sm-8 m-s">
+									<a href="/other/menu/{{ id }}"><i class="fa fa-angle-left" aria-hidden="true"></i>
+											Back</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+			</div>
+
+    <!-- /#wrapper -->
+	  {% include "other/footer.html" %}
+    {% block Jscript %}
+   <script>
+   	$(document).ready(function() {
+   		var host = window.location.origin;
+   		var type = $("#seletedValue").val();
+   		var val = '';
+   		if(type){
+   			val = type;
+   		}else{
+   			val = 'all';
+   		}
+		$('#myTable').DataTable({
+
+			"searching": false,
+			"ajax": host + "/other/getTransaction/"+val,
+			"columns": [
+				{ "data": "createdAt" },
+				{ "data": "description" },
+				{ "data": "transaction_amount" },
+				{ "data": "net_balance" },
+				{ "data": "withdraw_balance" },
+			]
+		});
+   	});
+   </script>
+    {% endblock %}
+</body>
+
+</html>

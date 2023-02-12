@@ -1,0 +1,67 @@
+{% extends "partition/layout.html" %}
+
+
+{% block body %}
+
+		<!-- Main Content -->
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<!-- Title -->
+				<section class="content-header">
+				    <h1>PDF</h1>
+				   
+				</section>
+				<!-- /Title -->
+				{% include "partition/notification.html" %}
+				<!-- Row -->
+				<section class="content">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="panel panel-default card-view">
+								<div class="panel-heading">
+									<div class="pull-left">
+										<h6 class="panel-title txt-dark"></h6>
+									</div>
+									
+									<div class="clearfix"></div>
+								</div>
+								<div class="panel-wrapper collapse in">
+									<div class="panel-body">
+										<div class="table-wrap">
+											<div class="table-responsive">
+												<table id="myTable" class="table table-bordered table-striped">
+													<thead>
+														<tr>
+															<th>PDF Name</th>
+													
+															<th>Action</th>
+														</tr>
+													</thead>
+													{% for item in  value %}
+													<tbody>
+														<tr>
+															<td><a href="/pdf/{{item.pdfname}}.pdf" download="" >{{item.pdfname}}</a></td>
+															
+															<td><button type="button" name="delete" onclick="window.location.href = '/player/pdfgenrateList/{{item._id}};'"  class="btn btn-danger btn-xs delete btn-rounded"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+														</tr>
+
+													</tbody>
+													{% endfor %}
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	
+
+{% endblock %}
+
+{% block Jscript %}
+
+{% endblock %}

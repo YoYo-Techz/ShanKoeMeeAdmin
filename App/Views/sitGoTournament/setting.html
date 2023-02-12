@@ -1,0 +1,241 @@
+{% extends "partition/layout.html" %}
+
+
+{% block body %}
+
+
+<!-- Main Content -->
+<div class="page-wrapper">
+	<div class="container-fluid">
+
+		<!-- Title -->
+		<div class="row heading-bg">
+			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+				<h5 class="txt-dark">Sit & Go Setting</h5>
+			</div>
+			<!-- Breadcrumb -->
+			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+				<ol class="breadcrumb">
+					<li><a href="/">Dashboard</a></li>
+					<li><a href="#"><span>Sit & Go Settings</span></a></li>
+					<!-- {% if player %}
+					<li class="active"><span>Edit User</span></li>
+					{% else %}
+					<li class="active"><span>Add User</span></li>
+					{% endif %} -->
+
+				</ol>
+			</div>
+			<!-- /Breadcrumb -->
+		</div>
+		<!-- /Title -->
+			{% include "partition/notification.html" %}
+		<!-- Row -->
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="panel panel-default card-view">
+					<div class="panel-heading">
+						<div class="pull-left">
+							<h6 class="panel-title txt-dark">Settings</h6>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="panel-wrapper collapse in">
+						<div class="panel-body">
+							<div class="table-wrap">
+								<div class="table-responsive">
+									{% if settings %}
+									<form method="POST" action="/sit-go-tournament/sitGTouSettingUpdate/{{settings.id}}" class="form-horizontal">
+										{% else %}
+										<form method="POST" action="/sit-go-tournament/sitGTouSettingAdd" class="form-horizontal">
+											{% endif %}
+											<table border="0" class="table display  pb-30">
+												<div class="col-sm-12">
+													<div class="panel-wrapper collapse in">
+														<div class="panel-body">
+															<!-- <input type="hidden" name="settingId" value="{{settings.id}}"> -->
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="username">Blind Level Raise Time [Minutes]:</label>
+																<div class="col-sm-6">
+																	<select required="required" class="form-control" data-validation="number" id="sit_n_go_tur_blind_levels" name="sit_n_go_tur_blind_levels"><option selected="selected" value="">Blind Level Raise Time</option>
+
+																		{% for item in minutes %}
+																		<option value="{{ item }}" {% if  item == settings.sit_n_go_tur_blind_levels %} selected {% endif %}  >{{ item }}</option>
+																		{% endfor %}
+
+
+																	</select>
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="pwd_hr">Payout Rules:</label>
+																<div class="col-sm-6"> 
+																		<div>
+																			<div><b>1<sup>st</sup> Place : </b>&nbsp; </div>
+																			<div><input type="number" required class="form-control" name="sit_n_go_tur_1st_payout" id="" placeholder="1st Payout" value="{{settings.sit_n_go_tur_1st_payout}}"></div>
+																		</div>
+																		<div>
+																			<div><b>2<sup>nd</sup> Place : </b>&nbsp; </div>
+																			<div><input type="number" required class="form-control" name="sit_n_go_tur_2st_payout" id="" placeholder="2nd Payout" value="{{settings.sit_n_go_tur_2st_payout}}"></div>
+																		</div>
+																		<div>
+																			<div><b>3<sup>rd</sup> Place : </b>&nbsp; </div>
+																			<div><input type="number" required class="form-control" name="sit_n_go_tur_3st_payout" id="" placeholder="3rd Payout" value="{{settings.sit_n_go_tur_3st_payout}}"></div>
+																		</div>
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="pwd_hr">Breaks Start In [Minutes]</label>
+																<div class="col-sm-6"> 
+																	<select required="required" data-validation="number" class="form-control" id="sit_n_go_tur_breaks_start_time" name="sit_n_go_tur_breaks_start_time"><option selected="selected" value="">Break Time</option>  {% for item in minutes %}
+																		<option value="{{ item }}" {% if  item == settings.sit_n_go_tur_breaks_start_time %} selected {% endif %}  >{{ item }}</option>
+																		{% endfor %}</select>
+																	</div>
+																</div>
+																<div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="pwd_hr">Breaks Time  [Minutes]</label>
+																	<div class="col-sm-6"> 
+																		<select required="required" data-validation="number" class="form-control" id="sit_n_go_tur_breaks" name="sit_n_go_tur_breaks"><option selected="selected" value="">Break Time</option> {% for item in minutes %}
+																			<option value="{{ item }}" {% if  item == settings.sit_n_go_tur_breaks %} selected {% endif %}  >{{ item }}</option>
+																			{% endfor %}</select>
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-2" for="pwd_hr">Game Play Default Chips</label>
+																		<div class="col-sm-6"> 
+																			<input required="required" data-validation="number" class="form-control" placeholder="Default Chips"  name="sit_n_go_tur_default_game_play_chips" type="text" id="sit_n_go_tur_default_game_play_chips" value="{{settings.sit_n_go_tur_default_game_play_chips}}">
+																		</div>
+																	</div>
+																	<div class="box-footer"><h4>Texas Game</h4></div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-2" for="pwd_hr">Stacks</label>
+																		<div class="col-sm-6"> 
+																			<select required="required" class="form-control" id="sit_n_go_tur_tex_stacks" name="sit_n_go_tur_tex_stacks">
+
+																				{% for item in stacks %}
+																				<option value="{{ item.minStack }}/{{ item.maxStack }}" {% if  item == settings.sit_n_go_tur_tex_stacks %} selected {% endif %}  >{{ item.minStack }}/{{ item.maxStack }}</option>
+																				{% endfor %}
+																			</select>
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-2" for="pwd_hr">Buy-in</label>
+																		<div class="col-sm-6"> 
+																			<input required="required" data-validation="number" class="form-control" placeholder="BuyIn" onchange="calculatFee()" name="sit_n_go_tur_tex_buy_in" type="text" id="tex_buy_in" value="{{settings.sit_n_go_tur_tex_entry_fee}}">
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-2" for="pwd_hr">Entry Fee</label>
+																		<div class="col-sm-6"> 
+																			<input required="required" data-validation="number" class="form-control" placeholder="Entry Fee" onchange="calculatFee()" name="sit_n_go_tur_tex_entry_fee" type="text" id="tex_entry_fee" value="{{settings.sit_n_go_tur_tex_entry_fee}}">
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-2" for="pwd_hr">Fee</label>
+																		<div class="col-sm-6"> 
+																			<input required="required" class="form-control" placeholder="Fee" readonly="" name="fee" type="text" id="tex_fee">
+																		</div>
+																	</div>
+																	<div class="box-footer"><h4>Omaha Game</h4></div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-2" for="pwd_hr">Stacks</label>
+																		<div class="col-sm-6"> 
+																			<select required="required" class="form-control" id="sit_n_go_tur_omh_stacks" name="sit_n_go_tur_omh_stacks">
+
+																				{% for item in stacks %}
+																				<option value="{{ item.minStack }}/{{ item.maxStack }}" {% if  item.minStack == settings.sit_n_go_tur_omh_stacks %} selected {% endif %}  >{{ item.minStack }}/{{ item.maxStack }}</option>
+																				{% endfor %}
+																			</select>
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-2" for="pwd_hr">Buy-in</label>
+																		<div class="col-sm-6"> 
+																			<input required="required" data-validation="number" class="form-control" placeholder="BuyIn" onchange="calculatOmhFee()" name="sit_n_go_tur_omh_buy_in" type="text" id="omh_buy_in" value="{{settings.sit_n_go_tur_omh_buy_in}}">
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-2" for="pwd_hr">Entry Fee</label>
+																		<div class="col-sm-6"> 
+																			<input required="required" data-validation="number" class="form-control" placeholder="Entry Fee" onchange="calculatOmhFee()" name="sit_n_go_tur_omh_entry_fee" type="text" id="omh_entry_fee" value="{{settings.sit_n_go_tur_omh_entry_fee}}">
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-2" for="pwd_hr">Fee</label>
+																		<div class="col-sm-6"> 
+																			<input required="required" class="form-control" placeholder="Fee" readonly="" name="fee" type="text" id="omh_fee">
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<tr>
+															<td colspan="2">
+																<input type="submit" class="btn btn-success btn-lg" value="submit">
+																<!-- <a href="/cashgames/stacks" class="btn btn-info btn-lg">Cancel</a> -->
+															</td>
+														</tr>
+													</div>
+												</div>
+											</table>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- /Row -->
+			</div>
+
+			{% endblock %}
+
+			{% block Jscript %}
+			<script>
+				$(document).ready( function () {
+					var host = window.location.origin;
+				} );
+
+
+				function calculatFee() { 
+
+					var buy_in = $('#tex_buy_in').val();
+					var entry_fee = $('#tex_entry_fee').val();
+
+					if (buy_in != '' && entry_fee != '') {
+						if ($.isNumeric(buy_in) && $.isNumeric(entry_fee)) {
+							var feemain = parseFloat(buy_in) * (parseFloat(entry_fee) / 100);
+							var fee = parseFloat(buy_in) + parseFloat(feemain);
+							fee += ' (Buy-in : ' + buy_in + ' + ' + feemain + ' Entry Fee)';
+							$('#tex_fee').val(fee);
+						} else {
+							alert('Plese enter numeric value for buy-in and entry fee.');
+						}
+					}
+				}
+				function calculatOmhFee() { 
+
+					var buy_in = $('#omh_buy_in').val();
+					var entry_fee = $('#omh_entry_fee').val();
+
+					if (buy_in != '' && entry_fee != '') {
+						if ($.isNumeric(buy_in) && $.isNumeric(entry_fee)) {
+							var feemain = parseFloat(buy_in) * (parseFloat(entry_fee) / 100);
+							var fee = parseFloat(buy_in) + parseFloat(feemain);
+							fee += ' (Buy-in : ' + buy_in + ' + ' + feemain + ' Entry Fee)';
+							$('#omh_fee').val(fee);
+						} else {
+							alert('Plese enter numeric value for buy-in and entry fee.');
+						}
+					}
+				}
+
+				calculatOmhFee();
+
+				calculatFee();
+
+
+
+			</script>
+			{% endblock %}

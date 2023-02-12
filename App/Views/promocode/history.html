@@ -1,0 +1,109 @@
+{% extends "partition/layout.html" %}
+
+
+{% block body %}
+		<!-- Main Content -->
+		<div class="page-wrapper">
+			<div class="container-fluid">
+
+				<!-- Title -->
+				<section class="content-header">
+				    <h1>Promocode History Table </h1>
+				    <ol class="breadcrumb">
+				        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+				        <li class="active">Promocode History</li>
+				    </ol>
+				</section>
+				<!-- /Title -->
+				{% include "partition/notification.html" %}
+				<section class="content">
+					<!-- Row -->
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="panel panel-default card-view">
+								<div class="panel-heading">
+									<div class="pull-left">
+										<h6 class="panel-title txt-dark">Promocode - {{promocode}}</h6>
+									</div>
+									<div class="pull-right">
+										<h6 class="panel-title txt-dark">Promocode Used - {{promocodeCount}}</h6>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+								<div class="panel-wrapper collapse in">
+									<div class="panel-body">
+										<div class="table-wrap">
+											<div class="table-responsive">
+												<table id="myTable" class="table table-bordered table-striped" >
+													<thead>
+														<tr>
+															<th>Promocode</th>
+															<th>Player UserName</th>
+															<th>Player Email</th>
+															<th>Date</th>
+														</tr>
+													</thead>
+													<tbody>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+			</div>
+		</div>
+
+
+{% endblock %}
+
+{% block Jscript %}
+<script>
+$(document).ready( function () {
+	var host = window.location.origin;
+	  var promocodeId = '{{promocodeId}}';
+	$('#myTable').DataTable({
+		"oLanguage": {
+			"sSearch": "Search Username"
+		},
+		// "scrollX": true,
+		"processing": true,
+		"serverSide": true,
+		// "searching": false,
+		"ordering": false,
+		"autoWidth": false,
+		"pageLength": 25,
+		"ajax": host + "/promocode/getHistory/" + promocodeId,
+		"columns": [
+			// { "data": "_id" },
+			{ "data": "promocode" },
+			{ "data": "player.username" },
+			{ "data": "player.email" },
+			{ "data": "createdAt",
+					render: function(data,type,row){
+					  let dt = new Date(row.createdAt);
+				      let date = dt.getDate();
+				      let month = parseInt(dt.getMonth()+1);
+				      let year = dt.getFullYear();
+				      let hours = dt.getHours();
+				      let minutes = dt.getMinutes();
+				      let ampm = hours >= 12 ? 'pm' : 'am';
+				      hours = hours % 12;
+				      hours = hours ? hours : 12;
+				      minutes = minutes < 10 ? '0'+ minutes : minutes;
+				      let createdAt = year + '/' + month + '/' + date + ' ' + hours + ':' + minutes + ' ' + ampm;
+				      return createdAt;
+				 	}
+			},
+
+
+		]
+	});
+} );
+
+</script>
+{% endblock %}

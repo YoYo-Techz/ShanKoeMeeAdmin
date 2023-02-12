@@ -1,0 +1,111 @@
+{% extends "partition/layout.html" %}
+
+
+{% block body %}
+
+
+<!-- Main Content -->
+<div class="page-wrapper">
+	<div class="container-fluid">
+		<section class="content-header">
+		    <h1>SEO table </h1>
+		    <ol class="breadcrumb">
+		        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+		        <li><a href="/seo"><i class="fa fa-user"></i> SEO</a>  </li>
+		        <!-- <li class="active"> Add Testimonials</li> -->
+		        {% if seo %}
+		        <li class="active">Edit SEO</li>
+		        {% else %}
+		        <li class="active">Add SEO</li>
+		        {% endif %}
+		    </ol>
+		</section>
+		<section class="content">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default card-view">
+						<div class="panel-heading">
+							<div class="pull-left">
+								
+								{% if seo %}
+								<h6 class="panel-title txt-dark">Edit SEO</h6>
+								{% else %}
+								<h6 class="panel-title txt-dark">Add SEO</h6>
+								{% endif %}
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-wrapper collapse in">
+							<div class="panel-body">
+								<div class="table-wrap">
+									<div class="table-responsive">
+										{% if seo %}
+										<form method="POST" action="/seoEdit/{{seo._id}}" name="adduser" class="form-horizontal" enctype="multipart/form-data">
+										{% else %}
+										<form method="POST" action="/addSeo" name="adduser" class="form-horizontal" enctype="multipart/form-data">
+										{% endif %}	
+											<table border="0" class="table display  pb-30">
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<div class="panel-wrapper collapse in">
+														<div class="panel-body">
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="name">URL:</label>
+																<div class="col-sm-10">
+																	{% if seo %}
+																		<input type="text" class="form-control" id="url" name="url" value="{{seo.url}}" placeholder="Enter URL" readonly>
+																	{% else %}
+																		<input type="text" class="form-control" id="url" name="url" value="{{seo.url}}" placeholder="Enter URL" required >
+																	{% endif %}	
+																	
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="name">Title:</label>
+																<div class="col-sm-10">
+																	<input type="text" class="form-control" id="title" name="title" placeholder="Enter Title" value="{{seo.title}}" required >
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="name">Description:</label>
+																<div class="col-sm-10">
+																	<textarea class="form-control" id="description" name="description" placeholder="Enter Description" value="{{seo.description}}" required>{{seo.description}}</textarea>
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="name">Keywords:</label>
+																<div class="col-sm-10">
+																	<input type="text" class="form-control" id="keywords" name="keywords" placeholder="Enter Keywords" value="{{seo.keywords}}" required >
+																</div>
+															</div>
+															
+														</div>
+													</div>
+												</div>
+												<tr>
+													<td colspan="2">
+														<input type="submit" class="btn btn-success btn-lg" value="submit">
+														<a href="/seo" class="btn btn-info btn-lg">Cancel</a>
+													</td>
+												</tr>
+											</table>
+										</form>		
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>		
+	</div>
+</div>	
+
+{% endblock %}
+
+{% block Jscript %}
+<script>
+	$(document).ready( function () {
+		var host = window.location.origin;
+	} );
+</script>
+{% endblock %}

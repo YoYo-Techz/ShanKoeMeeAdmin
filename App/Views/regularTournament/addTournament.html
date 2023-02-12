@@ -1,0 +1,273 @@
+{% extends "partition/layout.html" %}
+
+
+{% block body %}
+
+
+<!-- Main Content -->
+<div class="page-wrapper">
+	<div class="container-fluid">
+
+		<!-- Title -->
+		<div class="row heading-bg">
+			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+				<h5 class="txt-dark">Regulay Tournament</h5>
+			</div>
+			<!-- Breadcrumb -->
+			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+				<ol class="breadcrumb">
+					<li><a href="/">Dashboard</a></li>
+					<li><a href="/regular-tournament/tournament"><span>Regulay Tournament</span></a></li>
+					{% if player %}
+					<li class="active"><span>Edit Regulay Tournament</span></li>
+					{% else %}
+					<li class="active"><span>Add Regulay Tournament</span></li>
+					{% endif %}
+
+				</ol>
+			</div>
+			<!-- /Breadcrumb -->
+		</div>
+		<!-- /Title -->
+
+		<!-- Row -->
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="panel panel-default card-view">
+					<div class="panel-heading">
+						<div class="pull-left">
+							{% if player %}
+							<h6 class="panel-title txt-dark">Edit Regulay Tournament</h6>
+							{% else %}
+							<h6 class="panel-title txt-dark">Add Regulay Tournament</h6>
+							{% endif %}
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="panel-wrapper collapse in">
+						<div class="panel-body">
+							<div class="table-wrap">
+								<div class="table-responsive">
+									{% if player %}
+									<form method="POST" action="/regular-tournament/editRegularTournament/{{player.id}}" class="form-horizontal">
+										{% else %}
+										<form method="POST" action="/regular-tournament/postToAddTournament" class="form-horizontal">
+											{% endif %}
+											<table border="0" class="table display  pb-30">
+												<div class="col-sm-6">
+													<div class="panel-wrapper collapse in">
+														<div class="panel-body">
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-4" for="username">Blind Level Raise Time [Minutes]</label>
+																<div class="col-sm-8">
+																	<select required="required" class="form-control" data-validation="number" id="sit_n_go_tur_blind_levels" name="sit_n_go_tur_blind_levels"><option selected="selected" value="">Blind Level Raise Time</option>
+
+																		{% for item in minutes %}
+																		<option value="{{ item }}" {% if  item == player.blind_level %} selected {% endif %}  >{{ item }}</option>
+																		{% endfor %}
+
+
+																	</select>
+																</div>
+															</div>
+															{% if player %}
+															{% else %}
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-4" for="pwd_hr">Breaks Start In [Minutes]</label>
+																<div class="col-sm-8"> 
+																	<select required="required" data-validation="number" class="form-control" id="sit_n_go_tur_breaks_start_time" name="sit_n_go_tur_breaks_start_time"><option selected="selected" value="">Break Time</option>  {% for item in minutes %}
+																		<option value="{{ item }}" {% if  item == player.breaks_start_in %} selected {% endif %}  >{{ item }}</option>
+																		{% endfor %}</select>
+																	</div>
+																</div>
+																{% endif %}
+																<div class="form-group">
+																	<label class="control-label mb-10 col-sm-4" for="username">Breaks Time  [Minutes]</label>
+																	<div class="col-sm-8">
+																		<select required="required" data-validation="number" class="form-control" id="sit_n_go_tur_breaks" name="sit_n_go_tur_breaks"><option selected="selected" value="">Break Time</option> {% for item in minutes %}
+																			<option value="{{ item }}" {% if  item == player.breaks_time %} selected {% endif %}  >{{ item }}</option>
+																			{% endfor %}</select>
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-4" for="username">Stacks</label>
+																		<div class="col-sm-8">
+																			<select required="required" class="form-control" id="sit_n_go_tur_tex_stacks" name="stacks">
+
+																				{% for item in stacks %}
+																				<option value="{{ item.minStack }}/{{ item.maxStack }}" {% if  item == player.sit_n_go_tur_tex_stacks %} selected {% endif %}  >{{ item.minStack }}/{{ item.maxStack }}</option>
+																				{% endfor %}
+																			</select>
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-4" for="username">Buy-in</label>
+																		<div class="col-sm-8">
+																			<input required="required" data-validation="number" class="form-control" placeholder="BuyIn" onchange="calculatFee()" name="sit_n_go_tur_tex_buy_in" type="text" id="tex_buy_in" value="{{player.buy_in}}">
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-4" for="username">Entry Fee</label>
+																		<div class="col-sm-8">
+																			<input required="required" data-validation="number" class="form-control" placeholder="Entry Fee" onchange="calculatFee()" name="sit_n_go_tur_tex_entry_fee" type="text" id="tex_entry_fee" value="{{player.entry_fee}}">
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-4" for="username">Fee</label>
+																		<div class="col-sm-8">
+																			<input required="required" class="form-control" placeholder="Fee" readonly="" name="fee" type="text" id="tex_fee">
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-sm-6">
+															<div class="panel-wrapper collapse in">
+																<div class="panel-body">
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-4" for="mobile">Name</label>
+																		<div class="col-sm-8">
+																			<input required="required" class="form-control" data-validation="length alphanumeric" 
+																			data-validation-length="" 
+																			data-validation-error-msg="Username is required" placeholder="Name"  name="name" type="text" id="" value="{{player.name}}">
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-4" for="email">Minimum Players</label>
+																		<div class="col-sm-8">
+																			<input required="required" class="form-control" data-validation="number" placeholder="Minimum Players"  name="min_players" type="text" id="" value="{{player.min_players}}">
+																		</div>
+																	</div>
+
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-4" for="email">Maximum Players</label>
+																		<div class="col-sm-8"> 
+																			<input required="required" class="form-control" data-validation="number" placeholder="Maximum Players"  name="max_players" type="text" id="" value="{{player.max_players}}">
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-4" for="email">Register From</label>
+																		<div class="col-sm-8"> 
+																			<input required="required" class="form-control" placeholder="Register From"   name="register_from" type="text" id="buy_in_from" value="{{player.register_from}}">
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-4" for="email">Tournament Date </label>
+																		<div class="col-sm-8"> 
+																			<input required="required" class="form-control" placeholder="Tournament Date"   name="tournament_date" type="text" id="date" value="{{player.tournament_date_time}}">
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-4" for="email">Tournament Time</label>
+																		<div class="col-sm-8"> 
+																			<input required="required" class="form-control" placeholder="Tournament Time"   name="tournament_time" type="text" id="time" value="{{date}}">
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10 col-sm-4" for="email">Description</label>
+																		<div class="col-sm-8"> 
+																			<textarea required="required" class="form-control" data-validation="length alphanumeric" 
+																			data-validation-length="" 
+																			data-validation-error-msg="Username is required" name="description">{{player.description}}</textarea>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<tr>
+															<td colspan="2">
+																<input type="submit" class="btn btn-success btn-lg" value="submit">
+																<a href="/regular-tournament/tournament" class="btn btn-info btn-lg">Cancel</a>
+															</td>
+														</tr>
+													</div>
+												</div>
+											</table>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- /Row -->
+			</div>
+
+			{% endblock %}
+
+			{% block Jscript %}
+			<script>
+				$(document).ready( function () {
+					var host = window.location.origin;
+				} );
+
+				$(function () {
+			        // $("#buy_in_from").datepicker({dateFormat: 'yy-mm-dd'}).val();
+			        // $("#date").datepicker({dateFormat: 'yy-mm-dd'}).val();
+			        $('#time').clockpicker({
+			            autoclose: true
+			        });
+
+			        $("#buy_in_from").datepicker({
+			              format: 'yyyy-mm-dd',
+			              autoclose: true,
+			              // endDate: 'today',
+			        }).on('changeDate', function (selected) {
+			            var startDate = new Date(selected.date.valueOf());
+			            $('#date').datepicker('setStartDate', startDate);
+			        }).on('clearDate', function (selected) {
+			            $('#date').datepicker('setStartDate', null);
+			        });
+			        $("#date").datepicker({
+			              format: 'yyyy-mm-dd',
+			              autoclose: true,
+			              // endDate: 'today',
+			        }).on('changeDate', function (selected) {
+			            var startDate = new Date(selected.date.valueOf());
+			            $('#buy_in_from').datepicker('setStartDate', startDate);
+			        }).on('clearDate', function (selected) {
+			            $('#buy_in_from').datepicker('setStartDate', null);
+			        });
+			    });
+
+				function calculatFee() { 
+
+					var buy_in = $('#tex_buy_in').val();
+					var entry_fee = $('#tex_entry_fee').val();
+
+					if (buy_in != '' && entry_fee != '') {
+						if ($.isNumeric(buy_in) && $.isNumeric(entry_fee)) {
+							var feemain = parseFloat(buy_in) * (parseFloat(entry_fee) / 100);
+							var fee = parseFloat(buy_in) + parseFloat(feemain);
+							fee += ' (Buy-in : ' + buy_in + ' + ' + feemain + ' Entry Fee)';
+							$('#tex_fee').val(fee);
+						} else {
+							// alert('Plese enter numeric value for buy-in and entry fee.');
+						}
+					}
+				}
+				function calculatOmhFee() { 
+
+					var buy_in = $('#omh_buy_in').val();
+					var entry_fee = $('#omh_entry_fee').val();
+
+					if (buy_in != '' && entry_fee != '') {
+						if ($.isNumeric(buy_in) && $.isNumeric(entry_fee)) {
+							var feemain = parseFloat(buy_in) * (parseFloat(entry_fee) / 100);
+							var fee = parseFloat(buy_in) + parseFloat(feemain);
+							fee += ' (Buy-in : ' + buy_in + ' + ' + feemain + ' Entry Fee)';
+							$('#omh_fee').val(fee);
+						} else {
+							// alert('Plese enter numeric value for buy-in and entry fee.');
+						}
+					}
+				}
+
+				calculatOmhFee();
+
+				calculatFee();
+
+
+			</script>
+			{% endblock %}

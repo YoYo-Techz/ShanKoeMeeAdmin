@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "other/header.html" %}
+<body>
+	<section>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<h2 class="page-title">Add Bank Details</h2>
+					<div class="withdraw-cash">
+						<div class="row">
+							<div class="col-sm-6 col-md-5  ">
+							<form action="/other/postBankDetails/{{ playerId }}" onsubmit="return validation()" method="post" id="formData">
+									<div class="form-group">
+										<input type="text" class="form-control" placeholder="Bank Name" name="bankName" id="bankName" data-validation="length"
+										data-validation-length="min2"
+										data-validation-error-msg="Bank name is required" value="{{ playerData.bankName }}">
+
+										{# <input type="text" class="form-control" placeholder="Bank Name" name="bankName" id="bankName" value="{{ playerData.bankName }}">
+										<span id="bank"  class="text-danger font-weght-bold"></span> #}
+									</div>
+									<div class="form-group">
+										<input type="text" class="form-control" placeholder="Account Number" name="accountNumber" data-validation="length alphanumeric"
+										data-validation-length=""
+										data-validation-error-msg="Account Number is required" value="{{ playerData.accountNumber }}">
+
+										{# <input type="text" class="form-control" placeholder="Account Number" name="accountNumber" id="accountNumber" value="{{ playerData.accountNumber }}">
+										<span id="accnumber"  class="text-danger font-weght-bold"></span> #}
+									</div>
+									<div class="form-group">
+										<input type="text" class="form-control" placeholder="Account holder name" name="accountHolderName"  data-validation="length"
+										data-validation-length="min2"
+										data-validation-error-msg="Account holder name is required" value="{{ playerData.accountHolderName }}">
+
+										{# <input type="text" class="form-control" placeholder="Account holder name" name="accountHolderName" id="accountHolderName" value="{{ playerData.accountHolderName }}">
+										<span id="accholdername"  class="text-danger font-weght-bold"></span> #}
+									</div>
+									<div class="form-group">
+										<input type="text" class="form-control" placeholder="IFSC Code" name="ifscCode" data-validation="length alphanumeric"
+										data-validation-length=""
+										data-validation-error-msg="IFSC Code is required" value="{{ playerData.ifscCode }}">
+
+										{# <input type="text" class="form-control" placeholder="IFSC Code" name="ifscCode" id="ifscCode" value="{{ playerData.ifscCode }}">
+										<span id="ifsc"  class="text-danger font-weght-bold"></span> #}
+									</div>
+									
+									<div class="form-group text-center">
+										<button class="btn continue">{% if playerData.bankName %}Update{% else %}Submit{% endif %}</button>
+									</div>
+								</form>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="note">
+									<p><b>Note :</b> We are committed to protecting your personal information.</p>
+									<p>All your personal information is kept confidential and is held on our secure servers.</p>
+									<p>The information that we collect from you is used to provide customer support, process any of your transactions, and for internal analysis purposes.</p>
+									<p>For more information, read our <a href="#">Privacy Policy</a></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="container-fluid">
+					<div class="m-s">
+						<a href="/other/menu/{{ playerId }}"><i class="fa fa-angle-left" aria-hidden="true"></i>
+											Back</a>
+					</div>
+			</div>
+	
+	<!-- /#wrapper -->
+	{% include "other/footer.html" %}
+	{% block Jscript %}
+	{# <script src="/dist/js/init.js"></script> #}
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+	{# <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script> #}
+	
+	
+	<script>
+	$.validate({ 
+			modules : '',
+			 });
+
+			 {# function validation(){
+
+                var bankName = document.getElementById('bankName').value;
+                var accountNumber = document.getElementById('accountNumber').value.trim();
+                var accountHolderName = document.getElementById('accountHolderName').value;
+                var ifscCode = document.getElementById('ifscCode').value;
+
+                //Bank Name Validation
+                if(bankName == ""){
+                    document.getElementById('bank').innerHTML = "Please enter your Bank Name..!! ";
+                    return false;
+                }
+                if((bankName.length <= 2) || (bankName.length >60)){
+                    document.getElementById('bank').innerHTML =  "please Enter more than 2 later..";
+                    return false;   
+                }
+                if(!isNaN(bankName)){
+                    document.getElementById('bank').innerHTML = "Enter characters only...!!";
+                    return false;
+                }
+                //Account number validation...!
+                if(accountNumber == ""){
+                    document.getElementById('accnumber').innerHTML = "Please enter your Account number..!! ";
+                    return false;   
+                }
+                if(isNaN(accountNumber)){
+                    document.getElementById('accnumber').innerHTML = "Enter digit only...!!";
+                    return false;
+                }
+				//Account Holder Name validation...!
+				if(accountHolderName == ""){
+                    document.getElementById('accholdername').innerHTML = "Please enter your Account Holder Name..!! ";
+                    return false;
+                }
+				if(!isNaN(accountHolderName)){
+                    document.getElementById('accholdername').innerHTML = "Enter characters only...!!";
+                    return false;
+                }
+				if((accountHolderName.length <= 2) || (accountHolderName.length >60)){
+                    document.getElementById('accholdername').innerHTML =  "please Enter more than 2 later..";
+                    return false;   
+                }
+				//IFSC Code validation...!
+				if(ifscCode == ""){
+                    document.getElementById('ifsc').innerHTML = "Please enter your IFSC Code..!! ";
+                    return false;
+                }
+                if(!isNaN(ifscCode)){
+                    document.getElementById('ifsc').innerHTML = "Enter characters only...!!";
+                    return false;
+                }
+				if((ifscCode.length <= 2) || (ifscCode.length >50)){
+                    document.getElementById('ifsc').innerHTML =  "please Enter more than 2 later..";
+                    return false;   
+                }
+
+            } #}
+		
+	</script>
+
+
+	
+	{% endblock %}
+</body>
+
+</html>

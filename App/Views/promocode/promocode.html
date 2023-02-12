@@ -1,0 +1,161 @@
+{% extends "partition/layout.html" %}
+
+{% block body %}
+
+
+		<!-- Main Content -->
+		<div class="page-wrapper">
+			<div class="container-fluid">
+
+				<!-- Title -->
+				<section class="content-header">
+					<h1>Promocode</h1>
+					<ol class="breadcrumb">
+						<li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+						<li class="active">Promocode</li>
+					</ol>
+				</section>
+				<!-- /Title -->
+				{% include "partition/notification.html" %}
+				<!-- Row -->
+				<section class="content">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="panel panel-default card-view">
+								<div class="panel-heading">
+									<div class="pull-left">
+										 {# <h6 class="panel-title txt-dark">Promocode</h6>  #}
+									</div>
+									<div class="pull-right">
+										<a href="/promocode/add"><button type="button" class="btn btn-primary btn-md"><i class="fa fa-plus"></i> Add New Promocode</button></a>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+								<div class="panel-wrapper collapse in">
+									<div class="panel-body">
+										<div class="table-wrap">
+											<div class="table-responsive">
+											<input type="hidden" id="gameType"  name="gameType">
+												<table id="myTable" class="table table-hover display  pb-30" >
+													<thead>
+														<tr>
+															<!-- <th>Image</th> -->
+															<th>Name</th>
+															<th>Status</th>
+															<th>Code</th>
+															<th>Usage Limit Remaining</th>
+															<th>Action</th>
+														</tr>
+													</thead>
+													<tbody>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+
+{% endblock %}
+
+{% block Jscript %}
+<script>
+$(document).ready( function () {
+	var host = window.location.origin;
+	$('#myTable').DataTable({
+		"oLanguage": {
+			"sSearch": "Search Username"
+		},
+		// "scrollX": true,
+		"processing": true,
+		"serverSide": true,
+		// "searching": false,
+		"ordering": false,
+		"autoWidth": false,
+		"aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+		"iDisplayLength": 100,
+		"ajax": host + "/promocode/getPromocode",
+		"columns": [
+			// { "data": "_id" },
+			// {
+			// 	"data": "image",
+			// 	 render : function(data, type, row){
+	 	// 				return '<img height="100px" width="100px" src="/'+row.image+'"></img>'
+	 	// 		 }
+			// },
+			{ "data": "name" },
+			{ "data": "status" },
+			{ "data": "code" },
+			{ "data": "usage_limit" },
+			{
+				"data": "action",
+				render : function(data, type, row){
+					return '<a href="/promocode/edit/'+row._id+'"><button type="button" class="btn btn-warning btn-xs btn-rounded" name="edit"><i class="fa fa-edit " aria-hidden="true"></i></button></a> <button type="button" name="delete" id="'+row._id+'" class="btn btn-danger btn-xs delete btn-rounded"><i class="fa fa-trash" aria-hidden="true"></i></button>'
+					// return '<a href="/promocode/edit/'+row._id+'"><button type="button" class="btn btn-warning btn-xs btn-rounded" name="edit"><i class="fa fa-edit " aria-hidden="true"></i></button></a> <button type="button" name="delete" id="'+row._id+'" class="btn btn-danger btn-xs delete btn-rounded"><i class="fa fa-trash" aria-hidden="true"></i></button><a href="/promocode/history/'+row._id+'" class="btn btn-info btn-xs btn-rounded" title="Promocode History"><i class="fa fa-history" aria-hidden="true"></i></a>'
+				}
+			}
+		]
+	});
+
+	$(function() {
+		"use strict";
+
+		var SweetAlert = function() {};
+
+		SweetAlert.prototype.init = function() {
+
+			//Parameter
+			$('body').on('click', '.delete', function(e){
+				var id = $(this).attr('id');
+				var thisElement = this;
+					swal({
+							title: "Are you sure?",
+							text: "You will not be able to recover this Promocode!",
+							type: "warning",
+							showCancelButton: true,
+							confirmButtonColor: "#e69a2a",
+							confirmButtonText: "Yes, delete it!",
+							cancelButtonText: "No, cancel plx!",
+							closeOnConfirm: false,
+							closeOnCancel: false
+					}, function(isConfirm){
+							if (isConfirm) {
+								$.ajax({
+									type: 'POST',
+									url: host + "/promocode/delete",
+									data: {id: id},
+									success: function(resultData) {
+										// alert(resultData)
+										console.log(resultData);
+										if (resultData == 'success') {
+											$(thisElement).parent().parent().hide(700);
+											swal("Deleted!", "Your imaginary file has been deleted.", "success");
+										}else {
+												alert("Something went wrong")
+										}
+										// alert("Save Complete")
+									}
+								});
+									swal("Deleted!", "Promocode Deleted Succesfully.", "success");
+							} else {
+									swal("Cancelled", "Promocode Not Deleted)", "error");
+							}
+					});
+					return false;
+			});
+
+		},
+		$.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert;
+
+		$.SweetAlert.init();
+	});
+
+} );
+
+
+</script>
+{% endblock %}

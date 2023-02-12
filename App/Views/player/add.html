@@ -1,0 +1,216 @@
+{% extends "partition/layout.html" %}
+
+
+{% block body %}
+
+
+<!-- Main Content -->
+<div class="page-wrapper">
+	<div class="container-fluid">
+
+		<!-- Title -->
+		<section class="content-header">
+		    <h1>Player table </h1>
+		    <ol class="breadcrumb">
+		        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+		        <li href="/player">Player</li>
+		        {% if player %}
+		        <li class="active">Edit Player</li>
+		        {% else %}
+		        <li class="active">Add Player</li>
+		        {% endif %}
+		    </ol>
+		</section>
+		<!-- /Title -->
+
+		<section class="content">
+			<!-- Row -->
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default card-view">
+						<div class="panel-heading">
+							<div class="pull-left">
+								{% if player %}
+								<h6 class="panel-title txt-dark">Edit Player</h6>
+								{% else %}
+								<h6 class="panel-title txt-dark">Add Player</h6>
+								{% endif %}
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-wrapper collapse in">
+							<div class="panel-body">
+								<div class="table-wrap">
+									<div class="table-responsive">
+										{% if player %}
+											<form method="POST" action="/playerEdit/{{player._id}}" name="adduser" class="form-horizontal">
+											{% else %}
+											<form method="POST" action="/addPlayer" name="adduser" class="form-horizontal">
+												{% endif %}
+												<table border="0" class="table display  pb-30">
+													<div class="col-sm-6">
+														<div class="panel-wrapper collapse in">
+															<div class="panel-body">
+																<div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="username">Username:</label>
+																	<div class="col-sm-10">
+																		<input type="text" class="form-control" id="username" placeholder="Enter username" required name="username" value="{{player.username}}" data-validation="length alphanumeric" 
+																		data-validation-length="" 
+																		data-validation-error-msg="Username is required">
+																	</div>
+																</div>
+																{% if player %}
+																{% else %}
+																<div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="pwd_hr">Password:</label>
+																	<div class="col-sm-10"> 
+																		<input type="password" class="form-control" id="password" placeholder="Enter password" data-minlength="6" name="password" data-validation="length" data-validation-length="min6">
+																	</div>
+																</div>
+																{% endif %}
+																<div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="username">Firstname:</label>
+																	<div class="col-sm-10">
+																		<input type="text" class="form-control" id="firstname" placeholder="Enter firstname" required name="firstname" value="{{player.firstname}}" data-validation="length alphanumeric" 
+																		data-validation-length="" 
+																		data-validation-error-msg="Firstname is required">
+																	</div>
+																</div>
+																<div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="username">Lastname:</label>
+																	<div class="col-sm-10">
+																		<input type="text" class="form-control" id="lastname" placeholder="Enter lastname" required name="lastname" value="{{player.lastname}}" data-validation="length alphanumeric" 
+																		data-validation-length="" 
+																		data-validation-error-msg="Lastname is required">
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="col-sm-6">
+														<div class="panel-wrapper collapse in">
+															<div class="panel-body">
+																<div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="mobile">Mobile:</label>
+																	<div class="col-sm-10">
+																		<input type="text" class="form-control" id="mobile" placeholder="Enter mobile" required="" name="mobile" value="{{player.mobile}}" data-validation="number">
+																	</div>
+																</div>
+																<div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="email">Email:</label>
+																	<div class="col-sm-10">
+																		<input type="text" class="form-control" {{ "readonly disabled" if player else "" }}  required name="email" id="email" value="{{player.email}}" data-validation="email">
+																	</div>
+																</div>
+
+																<div class="form-group">
+																	<label class="control-label mb-10 col-sm-2" for="email">Gender:</label>
+																	<div class="col-sm-10"> 
+																		<select class="form-control" name="gender" id="gender">
+																			<option value="Male" {{ "selected" if player.gender=='Male' else "" }} >Male</option>
+																			<option value="Female" {{ "selected" if player.gender=='Female' else "" }} >Female</option>
+																		</select>
+																	</div>
+																</div>
+															
+															</div>
+														</div>
+													</div>
+													<tr>
+														<td colspan="2">
+															<input type="submit" class="btn btn-success btn-lg" value="submit">
+															<a href="/player" class="btn btn-info btn-lg">Cancel</a>
+														</td>
+													</tr>
+												</table>
+											</form>		
+									</div>
+								</div>
+										
+									
+								<!-- <div class="table-responsive">
+							    {% if player %}
+									<form method="POST" action="/playerEdit/{{player._id}}" name="adduser">
+						        {% else %}
+									<form method="POST" action="/addPlayer" name="adduser">
+						        {% endif %}
+
+									<table border="0" class="table display  pb-30">
+										<tr>
+											<td width="50%">Username</td>
+											<td><input type="text" class="form-control" required name="username" id="username" value="{{player.username}}"></td>
+										</tr>
+										{% if player %}
+										{% else %}
+										<tr>
+											<td width="50%">Password</td>
+											<td><input type="text" class="form-control" name="password" id="password" data-minlength="6">
+											</td>
+
+										</tr>
+										{% endif %}
+										<tr>
+											<td width="50%">Firstname</td>
+											<td><input type="text" class="form-control" required name="firstname" id="firstname" value="{{player.firstname}}"></td>
+										</tr>
+										<tr>
+											<td width="50%">Lastname</td>
+											<td><input type="text" class="form-control" required name="lastname" id="lastname" value="{{player.lastname}}"></td>
+										</tr>
+										<tr>
+											<td width="50%">Mobile</td>
+											<td><input type="text" class="form-control" required name="mobile" id="mobile" value="{{player.mobile}}"></td>
+										</tr>
+										<tr>
+											<td width="50%">Email</td>
+											<td><input type="text" class="form-control" {{ "readonly disabled" if player else "" }}  required name="email" id="email" value="{{player.email}}"></td>
+										</tr>
+										<tr>
+											<td width="50%">Gender</td>
+											<td>
+												<select class="form-control" name="gender" id="gender">
+													<option value="Male" {{ "selected" if player.gender=='Male' else "" }} >Male</option>
+													<option value="Female" {{ "selected" if player.gender=='Female' else "" }} >Female</option>
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<td width="50%">Is Bot</td>
+											<td>
+												<select class="form-control" name="bot" id="bot">
+													<option value="yes" {{ "selected" if player.status=='yes' else "" }} >Yes</option>
+													<option value="no" {{ "selected" if player.status=='no' else "" }} >No</option>
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<input type="submit" class="btn btn-success btn-lg" value="submit">
+												<a href="/player" class="btn btn-info btn-lg">Cancel</a>
+											</td>
+										</tr>
+									</table>
+								</form>
+
+							   </div> -->
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+					
+		</section>		
+				<!-- /Row -->
+	</div>
+</div>	
+
+{% endblock %}
+
+{% block Jscript %}
+<script>
+	$(document).ready( function () {
+		var host = window.location.origin;
+	} );
+</script>
+{% endblock %}

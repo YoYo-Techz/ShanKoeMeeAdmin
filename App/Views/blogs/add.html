@@ -1,0 +1,237 @@
+{% extends "partition/layout.html" %}
+
+
+{% block body %}
+
+
+<!-- Main Content -->
+<div class="page-wrapper">
+	<div class="container-fluid">
+		<section class="content-header">
+		    <h1>Blog table </h1>
+		    <ol class="breadcrumb">
+		        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+		        <li><a href="/blog"><i class="fa fa-user"></i> Blog</a>  </li>
+		        <!-- <li class="active"> Add Blog</li> -->
+		        {% if blog %}
+		        <li class="active">Edit Blog</li>
+		        {% else %}
+		        <li class="active">Add Blog</li>
+		        {% endif %}
+		    </ol>
+		</section>
+		<section class="content">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default card-view">
+						<div class="panel-heading">
+							<div class="pull-left">
+								{% if blog %}
+								<h6 class="panel-title txt-dark">Edit Blog</h6>
+								{% else %}
+								<h6 class="panel-title txt-dark">Add Blog</h6>
+								{% endif %}
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-wrapper collapse in">
+							<div class="panel-body">
+								<div class="table-wrap">
+									<div class="table-responsive">
+										<!-- <form method="POST" action="/addBlog" name="adduser" class="form-horizontal" enctype="multipart/form-data"> -->
+										{% if blog %}
+										<form method="POST" action="/blogEdit/{{blog._id}}" name="adduser" class="form-horizontal" enctype="multipart/form-data">
+										{% else %}
+										<form method="POST" action="/addBlog" name="adduser" class="form-horizontal" enctype="multipart/form-data">
+										{% endif %}	
+											<table border="0" class="table display  pb-30">
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<div class="panel-wrapper collapse in">
+														<div class="panel-body">
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="title">Blog Title:</label>
+																<div class="col-sm-10">
+																	<input type="text" class="form-control" id="title" placeholder="Enter title" required name="title" value="{{blog.title}}"  
+																	data-validation-error-msg="Blog Title is required">
+																</div>
+															</div>
+															<!-- <div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="tag">Tag:</label>
+																<div class="col-sm-10">
+																	<input type="text" class="form-control" id="tag" placeholder="Enter tag" required name="tag" value="{{blog.tag}}" data-validation="length alphanumeric" 
+																	data-validation-length="" 
+																	data-validation-error-msg="Tag is required">
+																</div>
+															</div> -->
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="categoryName">categoryName:</label>
+																<div class="col-sm-10">
+																	
+																	<select class="form-control" id="categoryName" required name="categoryName">
+																	  <option value="">Select Category</option>
+																	</select>
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="pwd_hr"> Blog Small Image (580*318 px):</label>
+																<div class="col-sm-10"> 
+																	<input type="file" class="form-control" id="photo" name="photo">
+																</div>
+																{% if blog %}
+																<div class="col-sm-10">
+																	<img src="/other/blog/{{blog.photo}}" style="width: 350px;margin-top: 10px;height: 150px;"/>
+																</div>
+																{% else %}
+																{% endif %}	
+															</div>
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="pwd_hr">Blog Detail Image (1160*635 px):</label>
+																<div class="col-sm-10"> 
+																	<input type="file" class="form-control" id="photo1" name="photo1">
+																</div>
+																{% if blog %}
+																<div class="col-sm-10">
+																	<img src="/other/blog/{{blog.photo1}}" style="width: 350px;margin-top: 10px;height: 150px;" />
+																</div>
+																{% else %}
+																{% endif %}
+															</div>
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="username">Description:</label>
+																<div class="col-sm-10">
+																	<!-- <input type="text" class="form-control" id="description" placeholder="Enter description" required name="description" value="{{blog.description}}" data-validation="length alphanumeric" 
+																	data-validation-length="" 
+																	data-validation-error-msg="Description is required"> -->
+																	<textarea class="form-control" id="description" name="description" value="{{blog.description}}" 
+																	data-validation-error-msg="Description is required">{{blog.description}}</textarea>
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="username">Page Meta Title:</label>
+																<div class="col-sm-10">
+																	<input type="text" class="form-control" id="page_meta_title" placeholder="Enter Page Meta Title" required name="page_meta_title" value="{{blog.page_meta_title}}"
+																	data-validation-error-msg="Page Meta Title is required">
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="username">Page Meta Keywords:</label>
+																<div class="col-sm-10">
+																	<input type="text" class="form-control" id="page_meta_keywords" placeholder="Enter Page Meta Keyword" required name="page_meta_keywords" value="{{blog.page_meta_keywords}}" 
+																	data-validation-error-msg="Page Meta Keyword is required">
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="username">Page Meta Description:</label>
+																<div class="col-sm-10">
+																	<textarea class="form-control" id="page_meta_description" name="page_meta_description" value="{{blog.page_meta_description}}" 
+																	data-validation-error-msg="Page Meta Description is required">{{blog.page_meta_description}}</textarea>
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="control-label mb-10 col-sm-2" for="username">Blog Page URL:</label>
+																<div class="col-sm-10">
+																	<input type="text" class="form-control" id="page_meta_url" placeholder="Enter Page Meta Url" required name="page_meta_url" value="{{blog.page_meta_url}}" data-validation-error-msg="Blog Page URL is required">
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<tr>
+													<td colspan="2">
+														<input type="submit" class="btn btn-success btn-lg" value="submit">
+														<a href="/blog" class="btn btn-info btn-lg">Cancel</a>
+													</td>
+												</tr>
+											</table>
+										</form>		
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>		
+	</div>
+</div>	
+
+{% endblock %}
+
+{% block Jscript %}
+<script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
+<script>
+        CKEDITOR.replace( 'description' );
+        //CKEDITOR.instances['description'].setData(blog.description);
+</script>
+
+<script>
+	$(document).ready( function () {
+		var host = window.location.origin;
+	} );
+</script>
+<script type="text/javascript">
+	var host = window.location.origin;
+	var categoryId = "{{ blog.categoryName._id }}";
+	// if (categoryName) {
+	// 	document.getElementById("categoryName").selected = true;	
+	// }
+  	
+  	
+	$.ajax({
+		type: 'GET',
+		url: host + "/blogCategories/list",
+		success: function(resultData) {
+			if (resultData) {
+				var categoryList = resultData.data;
+				categoryList.forEach(function(value, key) {
+                    $('#categoryName').append(new Option(value.name, value._id));
+                });
+                $('[id=categoryName] option').filter(function() { 
+					console.log($(this).val());
+				    return ($(this).val() == categoryId); //To select Blue
+				}).prop('selected', true);
+			}else {
+					alert("Something went wrong")
+			}
+			// alert("Save Complete")
+		}
+	});
+	//$("#categoryName option[value='aaaaaaaa']").attr("selected", "selected");
+
+</script>
+<script type='text/javascript'>
+  //var categoryName = {{blog.categoryName.name}};
+
+
+</script>
+<script type="text/javascript">
+	var _URL = window.URL || window.webkitURL;
+	$("#photo").change(function(e) {
+	    let img = new Image()
+		img.src = window.URL.createObjectURL(event.target.files[0])
+		img.onload = () => {
+		   if(img.width === 580 && img.height === 318){
+		        alert(`Nice, image is the right size. It can be uploaded`)
+		        // upload logic here
+		        } else {
+		        alert(`Sorry, this image doesn't look like the size we wanted. It's 
+		   ${img.width} x ${img.height} but we require 580 x 318 size image.`);
+		   }                
+		}
+
+	});
+	$("#photo1").change(function(e) {
+	    let img = new Image()
+		img.src = window.URL.createObjectURL(event.target.files[0])
+		img.onload = () => {
+		   if(img.width === 1160 && img.height === 635){
+		        alert(`Nice, image is the right size. It can be uploaded`)
+		        // upload logic here
+		        } else {
+		        alert(`Sorry, this image doesn't look like the size we wanted. It's 
+		   ${img.width} x ${img.height} but we require 1160 x 635 size image.`);
+		   }                
+		}
+	});
+</script>
+{% endblock %}

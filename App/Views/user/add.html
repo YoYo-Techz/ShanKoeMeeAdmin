@@ -1,0 +1,137 @@
+{% extends "partition/layout.html" %}
+
+
+{% block body %}
+
+
+<!-- Main Content -->
+<div class="page-wrapper">
+	<div class="container-fluid">
+
+		<!-- Title -->
+		<section class="content-header">
+		    <h1>User Table</h1>
+		    <ol class="breadcrumb">
+		        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+		        <li><a href="/user">User profile</a></li>
+		        {% if user %}
+		        <li class="active"><span>Edit User</span></li>
+		        {% else %}
+		        <li class="active"><span>Add User</span></li>
+		        {% endif %}
+		    </ol>
+		</section>
+		<!-- /Title -->
+		<!-- Row  -->
+		<section class="content">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default card-view">
+						<div class="panel-heading">
+							<div class="pull-left">
+								{% if user %}
+								<h6 class="panel-title txt-dark">Edit User</h6>
+								{% else %}
+								<h6 class="panel-title txt-dark">Add User</h6>
+								{% endif %}
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-wrapper collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-sm-12 col-xs-12">
+										<div class="form-wrap">
+											{% if user %}
+											<form method="POST" action="/userEdit/{{user._id}}" name="adduser" class="form-horizontal">
+												{% else %}
+												<form method="POST" action="/addUser" name="adduser" class="form-horizontal">
+													{% endif %}
+													<div class="form-group">
+														<label for="exampleInputuname_3" class="col-sm-3 control-label">Name*</label>
+														<div class="col-sm-6">
+															<div class="input-group">
+																<div class="input-group-addon"><i class="glyphicon glyphicon-user"></i></div>
+																<input type="text" class="form-control" required name="username" id="username" value="{{user.name}}" data-validation="length alphanumeric" 
+																data-validation-length="" 
+																data-validation-error-msg="Username is required">
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label  for="exampleInputEmail_3" class="col-sm-3 control-label">Email*</label>
+														<div class="col-sm-6">
+															<div class="input-group">
+																<div class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></div>
+																<input type="email" class="form-control" {{ "readonly disabled" if user else "" }}  required name="email" id="email" value="{{user.email}}" data-validation="email">
+															</div>
+														</div>
+													</div>
+													{% if user %}
+													{% else %}
+													<div class="form-group">
+														<label for="exampleInputpwd_32" class="col-sm-3 control-label">Password*</label>
+														<div class="col-sm-6">
+															<div class="input-group">
+																<div class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></div>
+																<input type="password" class="form-control" name="password" id="password" data-minlength="6" data-validation="length" data-validation-length="min6">
+															</div>
+														</div>
+													</div>
+													{% endif %}
+													<div class="form-group">
+														<label for="exampleInputpwd_4" class="col-sm-3 control-label">Status*</label>
+														<div class="col-sm-6">
+															<div class="input-group">
+																<div class="input-group-addon"><i class="glyphicon glyphicon-thumbs-up"></i></div>
+																<select class="form-control" name="status" id="status">
+																	<option value="active" {{ "selected" if user.status=='active' else "" }} >Active</option>
+																	<option value="inactive" {{ "selected" if user.status=='inactive' else "" }} >Inactive</option>
+																</select>
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="exampleInputpwd_4" class="col-sm-3 control-label">Role*</label>
+														<div class="col-sm-6">
+															<div class="input-group">
+																<div class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></div>
+																<select class="form-control" name="role" id="role">
+																	<option value="admin" {{ "selected" if user.role=='admin' else "" }} >Admin</option>
+																	<option value="user" {{ "selected" if user.role=='user' else "" }} >User</option>
+																</select>
+															</div>
+														</div>
+													</div>
+													<div class="form-group mb-0">
+														<div class="col-sm-offset-3 col-sm-9">
+															<input type="submit" class="btn btn-success btn-lg" value="submit">
+															<a href="/user" class="btn btn-info btn-lg">Cancel</a>
+														</div>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>	
+					</div>
+					<!-- Row -->
+					
+				<!-- /Row -->
+			</div>
+		</section>
+
+	</div>
+</div>		
+
+		{% endblock %}
+
+		{% block Jscript %}
+		<script>
+			$(document).ready( function () {
+				var host = window.location.origin;
+			} );
+		</script>
+		{% endblock %}

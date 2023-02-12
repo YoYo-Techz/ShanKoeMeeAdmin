@@ -1,0 +1,189 @@
+{% extends "partition/layout.html" %}
+
+
+{% block body %}
+{{session}}
+
+		<!-- Main Content -->
+		<div class="page-wrapper">
+			<div class="container-fluid">
+
+				<!-- Title -->
+				<div class="row heading-bg">
+					<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+					  <h5 class="txt-dark">Chips History</h5>
+					</div>
+					<!-- Breadcrumb -->
+					<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+					  <ol class="breadcrumb">
+						<li><a href="index.html">Dashboard</a></li>
+						<li><a href="#"><span>CHips History</span></a></li>
+						<!-- <li class="active"><span>data-table</span></li> -->
+					  </ol>
+					</div>
+					<!-- /Breadcrumb -->
+				</div>
+				<!-- /Title -->
+				{% include "partition/notification.html" %}
+				<!-- Row -->
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<!-- <h6 class="panel-title txt-dark">data Table</h6> -->
+								</div>
+								<div class="pull-right">
+									<!-- <a href="/addUser"><button type="button" class="btn btn-primary btn-md"><i class="fa fa-plus"></i> Add User</button></a> -->
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="table-wrap">
+										<div class="table-responsive">
+											<table id="myTable" class="table table-hover display  pb-30" >
+												<thead>
+													<tr>
+														<!-- <th>Transaction Id</th> -->
+														<th>Username </th>
+														<th>Chips</th>
+														<th>Debit/Credit</th>
+														<th>Reason</th>
+														<!-- <th>Payment Id</th> -->
+														<th>Current Balance</th>
+														<th>Transaction Date</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+{% endblock %}
+
+{% block Jscript %}
+<script>
+$(document).ready( function () {
+	var host = window.location.origin;
+	$('#myTable').DataTable({
+		"oLanguage": {
+			"sSearch": "Search Username"
+		},
+		// "scrollX": true,
+		"processing": true,
+		"serverSide": true,
+		// "searching": false,
+		"ordering": false,
+		"autoWidth": false,
+		"pageLength": 25,
+		"ajax": host + "/player/getChipsHistory",
+		"columns": [
+			// { "data": "transactionNumber" },
+			{ "data": "username" },
+			{ "data": "chips" },
+			{ "data": "type" },
+			{ "data": "reason" },
+			{ "data": "afterBalance" },
+			{ "data": "createdAt",
+
+				render: function(data,type,row){
+
+					  let dt = new Date(row.createdAt);
+				      let date = dt.getDate();
+				      let month = parseInt(dt.getMonth()+1);
+				      let year = dt.getFullYear();
+				      let hours = dt.getHours();
+				      let minutes = dt.getMinutes();
+				      let ampm = hours >= 12 ? 'pm' : 'am';
+				      hours = hours % 12;
+				      hours = hours ? hours : 12;
+				      minutes = minutes < 10 ? '0'+ minutes : minutes;
+				      let createdAt = month + '/' + date + '/' + year + ' ' + hours + ':' + minutes + ' ' + ampm;
+				      return createdAt
+				      // users[j].createdAt = createdAt;
+				}
+
+			},
+			// {
+			// 	"data": "image",
+			// 	render : function(data, type, row){
+			// 		return '<img height="100px" src="'+row.image+'"></img>'
+			// 	}
+			// },
+
+			// {
+			// 	"data": "action",
+			// 	render : function(data, type, row){
+			// 		return '<a href="/userEdit/'+row._id+'"><button type="button" class="btn btn-warning btn-xs btn-rounded" name="edit"><i class="fa fa-edit" aria-hidden="true"></i></button></a> <button type="button" name="delete" id="'+row._id+'" class="btn btn-danger btn-xs delete btn-rounded"><i class="fa fa-trash" aria-hidden="true"></i></button>'
+					// return '<a href="/userEdit/'+row._id+'"><button type="button" class="btn btn-warning btn-xs" name="edit"><i class="fa fa-edit" aria-hidden="true"></i></button></a> <button type="button" name="delete" id="'+row._id+'" class="btn btn-danger btn-xs delete"><i class="fa fa-trash" aria-hidden="true"></i></button> '
+			// 	}
+			// }
+		]
+	});
+
+	$(function() {
+		"use strict";
+
+		var SweetAlert = function() {};
+
+		SweetAlert.prototype.init = function() {
+
+			//Parameter
+			$('body').on('click', '.delete', function(e){
+				var id = $(this).attr('id');
+				var thisElement = this;
+					swal({
+							title: "Are you sure?",
+							text: "You will not be able to recover this User!",
+							type: "warning",
+							showCancelButton: true,
+							confirmButtonColor: "#e69a2a",
+							confirmButtonText: "Yes, delete it!",
+							cancelButtonText: "No, cancel plx!",
+							closeOnConfirm: false,
+							closeOnCancel: false
+					}, function(isConfirm){
+							if (isConfirm) {
+								$.ajax({
+									type: 'POST',
+									url: host + "/user/getUserDelete",
+									data: {id: id},
+									success: function(resultData) {
+										// alert(resultData)
+										console.log(resultData);
+										if (resultData == 'success') {
+											$(thisElement).parent().parent().hide(700);
+											swal("Deleted!", "Your imaginary file has been deleted.", "success");
+										}else {
+												alert("Something went wrong")
+										}
+										// alert("Save Complete")
+									}
+								});
+									swal("Deleted!", "User Deleted Succesfully.", "success");
+							} else {
+									swal("Cancelled", "User Not Deleted)", "error");
+							}
+					});
+					return false;
+			});
+
+		},
+		$.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert;
+
+		$.SweetAlert.init();
+	});
+
+} );
+
+
+</script>
+{% endblock %}

@@ -1,0 +1,258 @@
+{% extends "partition/layout.html" %}
+
+{% block body %}
+
+<!-- Main Content -->
+<div class="page-wrapper">
+	<div class="container-fluid">
+
+		<!-- Title -->
+		<section class="content-header">
+		    <h1>Game History</h1>
+		    <ol class="breadcrumb">
+		        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+		        <li class="active" href="/game">Game History</li>
+		    </ol>
+		</section>
+		<!-- /Title -->
+		{% include "partition/notification.html" %}
+
+		<section class="invoice">
+		  <!-- title row -->
+		  <div class="row">
+		    <div class="col-xs-12">
+		      <h2 class="page-header">
+		        <i class="fa fa-gamepad"></i> {{games.gameNumber}}
+		        <small class="pull-right">Date: {{gameDates.createdAt}}</small>
+		      </h2>
+		    </div>
+		    <!-- /.col -->
+		  </div>
+		  <!-- info row -->
+		  <div class="row invoice-info">
+		    <div class="col-sm-4 invoice-col">
+		      <address>
+		        <b>Small Blind:</b> {{games.smallBlind}} <br>
+		        <b>Big Blind:</b> {{games.bigBlind}}<br>
+		      </address>
+		    </div>
+		    <div class="col-sm-4 invoice-col">
+		      <address>
+		        <b>STATUS:</b> {{games.status}} <br>
+		        <b>Pot:</b> {{games.pot}}
+		      </address>
+		    </div>
+		    <div class="col-sm-4 invoice-col">
+		      <address>
+		        <b>Game Start Time:</b> {{gameDates.createdAt}} <br>
+		        <b>Game End Time:</b> {{gameDates.updatedAt}}<br>
+		        <b>Game Duration:</b> {{gameDates.gameDuration}} Minutes
+		      </address>
+		    </div>
+
+
+		  </div>
+		  <!-- /.row -->
+
+		 <!-- Table player row -->
+		 <div class="row">
+		    <div class="col-xs-12 table-responsive">
+		    	<div class="col-xs-12">
+		    	  <h2 class="page-header">
+		    	    <i class=""></i> Player
+		    	    <small class="pull-right">Total Player: {{players.length}}</small>
+		    	  </h2>
+		    	</div>
+			     <table class="table table-bordered table-striped">
+			        <thead>
+			        <tr>
+			        	<th>playerName</th>
+			        	<th>Chips</th>
+			        	<th>Status</th>
+			        	<!-- <th>ProfilePicId</th>
+			        	<th>SeatIndex</th>
+			        	<th>AllIn</th>
+			        	<th>AutoBuyin</th>
+			        	<th>DefaultActionCount</th>
+			        	<th>Blind</th>
+			        	<th>SideshowRequested</th>
+			        	<th>BuyInAmount</th> -->
+			        	<th>Bot</th>
+			        </tr>
+			        </thead>
+			        <tbody>
+			        	{% if players.length==0 %}
+			        		<tr>
+			        			<td colspan="4" class="text-center">No Player data Available</td>
+			        		</tr>
+			        	{% else %}
+				        	{% for player in players %}
+				        	<tr>
+				        		<td>{{ player.playerName }}</td>
+				        		<td>{{ player.chips }}</td>
+				        		<td>{{ player.status }}</td>
+				        		<!-- <td>{{ player.profilePicId }}</td>
+				        		<td>{{ player.seatIndex }}</td>
+				        		<td>{{ player.allIn }}</td>
+				        		<td>{{ player.autoBuyin }}</td>
+				        		<td>{{ player.defaultActionCount }}</td>
+				        		<td>{{ player.blind }}</td>
+				        		<td>{{ player.sideshowRequested }}</td>
+				        		<td>{{ player.buyInAmount }}</td> -->
+				        		<td>{{ player.cards|safe }}</td>
+				        	</tr>
+				        	{% endfor %}
+				        {% endif %}
+			        </tbody>
+			     </table>
+		    </div>
+		    <!-- /.col -->
+		 </div>
+		 <!-- /.row -->
+
+		    <!-- Table Winner row -->
+		    <div class="row">
+		      <div class="col-xs-12 table-responsive">
+		      	<div class="col-xs-12">
+		      	  <h2 class="page-header">
+		      	    <i class=""></i> Winner
+		      	  </h2>
+		      	</div>
+		  	     <table class="table table-bordered table-striped">
+		  	        <thead>
+		  	        <tr>
+		  	        	<th>playerName</th>
+		    			<th>chips</th>
+		    			<th>winningType</th>
+		    			<th>hand</th>
+		  	        </tr>
+		  	        </thead>
+		  	        <tbody>
+		  	        	{% if winners.length==0 %}
+		  	        		<tr>
+		  	        			<td colspan="4" class="text-center">No Winner data Available</td>
+		  	        		</tr>
+		  	        	{% else %}
+			  	        	{% for winner in winners %}
+					    		<tr>
+					    			<td>{{ winner.playerName }}</td>
+					    			<td>{{ winner.chips }}</td>
+					    			<td>{{ winner.winningType }}</td>
+					    			<td>{{ winner.hand|safe }}</td>
+					    		</tr>
+					    	{% endfor %}
+					    {% endif %}
+		  	        </tbody>
+		  	     </table>
+		      </div>
+		      <!-- /.col -->
+		    </div>
+		    <!-- /.row -->
+
+	        <!-- Table Deck row -->
+	        <div class="row">
+	          <div class="col-xs-12 table-responsive" >
+	          	<div class="col-xs-12">
+	          	  <h2 class="page-header">
+	          	    <i class=""></i> Deck
+	          	  </h2>
+	          	</div>
+	          	<div class="col-xs-12" style="overflow: auto;white-space: nowrap;">
+	      	     <table class="table table-bordered table-striped" >
+	      	     	{% if games.deck.length==0 %}
+	      	     		<tr>
+	      	     			<td colspan="4" class="text-center">No Deck data Available</td>
+	      	     		</tr>
+	      	     	{% else %}
+		      	        {% for game in games.deck %}
+		      	        <tbody>
+		      	        	<tr  >
+		      	        		{{ game|safe }}
+		      	        	</tr>
+		      	        </tbody>
+		      	        {% endfor %}
+		      	    {% endif %}
+	      	     </table>
+	      	 </div>
+	          </div>
+	          <!-- /.col -->
+	        </div>
+	        <!-- /.row -->
+
+	        <!-- History datatable -->
+	        <div class="row" style="margin-top: 20px;">
+	        	<div class="col-sm-12">
+	        		<div class="box box-default collapsed-box">
+	        		  <div class="box-header with-border">
+	        		    <h3 class="box-title">History</h3>
+
+	        		    <div class="box-tools pull-right">
+	        		      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+	        		      </button>
+	        		    </div>
+	        		    <!-- /.box-tools -->
+	        		  </div>
+	        		  <!-- /.box-header -->
+	        		  <div class="box-body">
+	        		   	<table id="myTable" class="table table-bordered table-striped" >
+	        				<thead>
+	        					<tr>
+	        						<th>playerName</th>
+	        						<th>betAmount</th>
+	        						<th>totalBetAmount</th>
+	        						<th>playerAction</th>
+	        						<th>remaining</th>
+	        						<th>gameRound</th>
+	        					</tr>
+	        				</thead>
+	        				<tbody>
+	        					{% for history in historys %}
+	        					<tr>
+	        						<td>{{ history.playerName }}</td>
+	        						<td>{{ history.betAmount }}</td>
+	        						<td>{{ history.totalBetAmount }}</td>
+	        						<td>
+	        							{% if history.playerAction == '0'  %}
+	        							SmallBlind
+	        							{% elif history.playerAction == '1' %}
+	        							BigBlind
+	        							{% elif history.playerAction == '2' %}
+	        							Show
+	        							{% elif history.playerAction == '3' %}
+	        							Bet
+	        							{% elif history.playerAction == '4' %}
+	        							AllIn
+	        							{% elif history.playerAction == '6' %}
+	        							Fold
+	        							{% elif history.playerAction == '9' %}
+	        							SideShow
+	        							{% endif %}
+	        						</td>
+	        						<td>{{ history.remaining }}</td>
+	        						<td>{{ history.gameRound }}</td>
+	        					</tr>
+	        					{% endfor %}
+	        				</tbody>
+	        			</table>
+	        		  </div>
+	        		  <!-- /.box-body -->
+	        		</div>
+	        	</div>
+	        </div>
+
+		</section>
+	</div>
+</div>
+
+
+
+
+
+
+{% endblock %}
+
+{% block Jscript %}
+<script>
+
+</script>
+{% endblock %}

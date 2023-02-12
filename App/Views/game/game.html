@@ -1,0 +1,115 @@
+{% extends "partition/layout.html" %}
+
+
+{% block body %}
+
+		<!-- Main Content -->
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<!-- Title -->
+				<section class="content-header">
+				    <h1>Game Table</h1>
+				    <ol class="breadcrumb">
+				        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+				        <li class="active" href="/game">Game</li>
+				    </ol>
+				</section>
+				<!-- /Title -->
+				{% include "partition/notification.html" %}
+				<!-- Row -->
+				<section class="content">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="panel panel-default card-view">
+								<div class="panel-heading">
+									<div class="pull-left">
+										<h6 class="panel-title txt-dark">Players</h6>
+									</div>
+
+									<div class="clearfix"></div>
+								</div>
+								<div class="panel-wrapper collapse in">
+									<div class="panel-body">
+										<div class="table-wrap">
+											<div class="table-responsive">
+												<table id="myTable" class="table table-bordered table-striped" >
+													<thead>
+														<tr>
+															<th>Id</th>	
+															<th>STATUS</th>
+															<th>Date</th>
+															<th>Action</th>
+														</tr>
+													</thead>
+													<tbody>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+
+
+
+{% endblock %}
+
+{% block Jscript %}
+<script>
+
+$(document).ready( function () {
+	var host = window.location.origin;
+	$('#myTable').DataTable({
+		"oLanguage": {
+			"sSearch": "Search Game"
+		},
+		// "scrollX": true,
+		"processing": true,
+		"serverSide": true,
+		// "searching": false,
+		"ordering": false,
+		"autoWidth": false,
+		"pageLength": 10,
+		"ajax": host + "/game/getGameData",
+		"columns": [
+			// { "data": "_id" },
+			{ "data": "gameNumber" },
+			//{ "data": "smallBlind" },
+			//{ "data": "bigBlind" },
+			{ "data": "status" },
+			//{ "data": "pot" },
+			{ "data": "createdAt"},
+			// { "data": "isBot" },
+			// {
+   //            "data": "isBot",
+   //          render : function(data, type, row){
+   //            return data?'<div class="text-center"><b>Yes</b><br>('+row.botStatus+')</div>':'<div class="text-center">No</div>'
+   //          }
+   //        },
+			// { "data": "email" },
+			// {
+			// 	"data": "image",
+			// 	render : function(data, type, row){
+			// 		return '<img height="100px" src="'+row.image+'"></img>'
+			// 	}
+			// },
+
+			{
+				"data": "action",
+				render : function(data, type, row){
+					return '<a href="/game/allGameHistory/'+row._id+'" class="btn btn-info btn-xs btn-rounded" title="Game History"><i class="fa fa-history" aria-hidden="true"></i></a>'
+					// return '<a href="/userEdit/'+row._id+'"><button type="button" class="btn btn-warning btn-xs" name="edit"><i class="fa fa-edit" aria-hidden="true"></i></button></a> <button type="button" name="delete" id="'+row._id+'" class="btn btn-danger btn-xs delete"><i class="fa fa-trash" aria-hidden="true"></i></button> '
+				}
+			}
+		]
+	});
+
+} );
+
+</script>
+{% endblock %}

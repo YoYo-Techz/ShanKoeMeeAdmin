@@ -1,0 +1,134 @@
+{% extends "partition/layout.html" %}
+
+
+{% block body %}
+		<!-- Main Content -->
+		<div class="page-wrapper">
+			<div class="container-fluid">
+
+				<!-- Title -->
+				<section class="content-header">
+				    <h1>Chips Table </h1>
+				    <ol class="breadcrumb">
+				        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+				        <li class="active">Chips History</li>
+				    </ol>
+				</section>
+				<!-- /Title -->
+				{% include "partition/notification.html" %}
+				<section class="content">
+					<!-- Row -->
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="panel panel-default card-view">
+								<div class="panel-heading">
+									<div class="pull-left">
+										<!-- <h6 class="panel-title txt-dark">Player Table</h6> -->
+									</div>
+									<div class="pull-right">
+									</div>
+									<div class="clearfix"></div>
+								</div>
+								<input type="hidden" id="playerId" value="{{playerId}}">
+								<div class="panel-wrapper collapse in">
+									<div class="panel-body">
+										<div class="table-wrap">
+											<div class="table-responsive">
+												<table id="myTable" class="table table-bordered table-striped" >
+													<thead>
+														<tr>
+															<th>Transaction Number</th>
+															<th>Username</th>
+															<th>Game Id</th>
+															<th>Game Type</th>
+															<th>Table Type</th>
+															<th>Transaction Type</th>
+															<th>Chips</th>
+															<th>Message</th>
+															<!-- <th>After Balance</th> -->
+															<th>Status</th>
+															<th>Date</th>
+														
+														</tr>
+													</thead>
+													<tbody>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				
+			</div>
+		</div>
+
+
+{% endblock %}
+
+{% block Jscript %}
+<script>
+$(document).ready( function () {
+	var host = window.location.origin;
+	  var playerId = $('#playerId').val();
+	$('#myTable').DataTable({
+		"oLanguage": {
+			"sSearch": "Search Username"
+		},
+		// "scrollX": true,
+		"processing": true,
+		"serverSide": true,
+		// "searching": false,
+		"ordering": false,
+		"autoWidth": false,
+		"pageLength": 25,
+		"ajax": host + "/player/getChipsHistory/" + playerId,
+		"columns": [
+			// { "data": "_id" },
+			{ "data": "transactionNumber" },
+			{ "data": "userName" },
+			{ "data": "gameId",
+			render : function(data, type, row){
+					if(row.gameId==undefined)
+					{
+						return '';
+					}else{
+					return '<a href="/game/history/particularGameHistory/'+row.gameId+'">'+row.gameId+'</a> '
+					}
+				}
+			 },
+			{ "data": "gameType" },
+			{ "data": "tableType" },
+			{ "data": "tranType"},
+			{ "data": "chips" },
+			//{ "data": "cash" },
+			{ "data": "message" },
+			//{ "data": "afterBalance" },
+			{ "data": "status" },
+			{ "data": "createdAt",
+
+				render: function(data,type,row){
+				  let dt = new Date(row.createdAt);
+			      let date = dt.getDate();
+			      let month = parseInt(dt.getMonth()+1);
+			      let year = dt.getFullYear();
+			      let hours = dt.getHours();
+			      let minutes = dt.getMinutes();
+			      let ampm = hours >= 12 ? 'pm' : 'am';
+			      hours = hours % 12;
+			      hours = hours ? hours : 12;
+			      minutes = minutes < 10 ? '0'+ minutes : minutes;
+			      let createdAt = year + '/' + month + '/' + date + ' ' + hours + ':' + minutes + ' ' + ampm;
+			      return createdAt;
+			 	}
+			 },
+			
+		]
+	});
+} );
+
+</script>
+{% endblock %}

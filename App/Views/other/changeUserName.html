@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "other/header.html" %}
+<body>
+	<section>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12 m-s">
+					<h2 class="page-title">Change Username</h2>
+					<div class="profiles">
+						<div class=" withdraw_cash_stapeone support-contact-us">
+							<div class="col-lg-12">
+								<div class="fusion_subtitle hide-dsk">Change your usename here</div>
+							</div>
+							<div class="fusion_account_con">
+
+
+								<div id="hideOnSuccess" style="display: block">
+
+									<div class="col-lg-12 hide-dsk email-dec" id="showUsername">Username you had requested for was not available. To change your username, enter new username below.</div><br><br>
+
+
+									<div class="col-lg-12 email-decs"><b>Please note that you can change your username only once.</b></div>
+									<div class="row">
+										<div class="col-lg-12">
+											<form class="form-horizontal" action="/other/changeEmail" method="post">
+												<div class="form-group"> <span class="col-lg-4 col-sm-4 old-label-des ">Old Username:</span> <span class="old-label-des-email " id="oldUsername">{{data.username}}</span>
+
+													<input type="hidden" name="sync-token" id="sync-token" value="28ca2492-1685-4767-b8d9-519cafe37c48">
+													<input type="hidden" name="id" value="{{data._id}}" id="playerId">
+													<input type="hidden" name="overlay" class="overlayJourney" id="overlayJourney" value="false"> </div>
+													<div class="form-group">
+														<label class="col-lg-4 col-sm-4 control-label"> New Username :</label>
+														<div class="col-lg-4 col-sm-5">
+															<input class="form-control usernameTextbox" maxlength="12" type="text" name="username" id="usernameTextbox" data-validation="length alphanumeric"
+																	data-validation-length=""
+																	data-validation-error-msg="Username is required"> </div>
+															<div class="error"></div>
+															<div class="col-lg-4 col-lg-offset-0 col-sm-8 col-sm-offset-4 error-text"></div>
+														</div>
+														<div class="form-group">
+															<label class="col-lg-4 col-sm-4 control-label"> Confirm Username :</label>
+															<div class="col-lg-4 col-sm-5">
+																<input class="form-control conf_usernameTextbox" type="text" id="conf_usernameTextbox" maxlength="12"  data-validation="length alphanumeric"
+																	data-validation-length=""
+																	data-validation-error-msg="Username is required"> </div>
+																<div class="col-lg-4 col-lg-offset-0 col-sm-8 col-sm-offset-4 error-text"></div>
+															</div>
+
+															<div class="form-group" style="display: none;">
+																<label class="col-lg-4 col-sm-4 control-label"> Password :</label>
+																<div class="col-lg-4 col-sm-5">
+																	<input class="form-control passwordTextbox" type="password" id="passwordTextbox"> </div>
+																	<div class="col-lg-4 col-lg-offset-0 col-sm-8 col-sm-offset-4 error-text"></div>
+																</div>
+
+
+																<div class="form-group">
+																	<div class="col-lg-8 col-lg-offset-4 col-sm-8 col-sm-offset-4 ">
+																		<button type="submit" class="btn_primery username_submit" id="" onclick="changeUsername.validateUsernameAndSubmit(true)">Submit</button>
+																	</div>
+																</div>
+
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+					<div class="m-s">
+						<a href="/other/profile/{{data._id}}"><i class="fa fa-angle-left" aria-hidden="true"></i>
+											Back</a>
+					</div>
+						{% include "other/footer.html" %}
+						{% block Jscript %}
+						<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+				<script>
+
+					 $.validate({
+					    modules : 'security',
+
+					  });
+					 $(document).ready(function() {
+					 var host = window.location.origin;
+					 	 $("#showUsername").hide();
+					 	$("#usernameTextbox").blur(function(){
+							var username = $("#usernameTextbox").val();
+							var playerId = $("#playerId").val();
+							$.ajax({
+				              url: host + "/other/checkUsername",
+				              type: "post",
+				              data: {username: username ,playerId:playerId},
+				              success: function(result){
+				              	console.log("requested",result)
+				              	if(result == 'success'){
+				              	  $("#showUsername").show();
+				              	  $(".error").text("User name already exists");
+				              	}else{
+				                $("#showUsername").hide();
+				                $(".error").hide();
+				              	}
+				             }
+				            });
+		  });
+					 });
+	</script>
+						{% endblock %}
+					</body>
+
+					</html>
