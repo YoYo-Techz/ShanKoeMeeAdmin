@@ -1,6 +1,6 @@
 module.exports = {
 	details : {
-		name : 'Ludo'
+		name : 'Shan Koe Mee'
 	},
 	logger : {
 		logFolder : 'Log', // Change Your Name With Your Custom Folder
@@ -9,7 +9,7 @@ module.exports = {
 	},
 	defaultUserLogin:{
 		email : 'admin@gmail.com',
-		password : 'kargan82',
+		password : 'asdfasdf',
 		name : 'ShanKoeMee',
 		role : 'admin'
 	},
