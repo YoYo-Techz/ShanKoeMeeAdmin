@@ -14,19 +14,16 @@ module.exports = {
 		role : 'admin'
 	},
 	site_config:{
-		url:"https://codersboy.com"
+		url:"https://shan.kohtut.me",
 	},
 	mailer: {
 	     auth: {
-	       // user: 'node1@aistechnolabs.co.uk',
-	       // pass: 'AIS@#!@#$!@SW',
-	       user: 'no-reply@therummyround.com',
+			user: 'no-reply@kohtut.me',
 	       pass: 'Shree@1204',
 	     },
-	     defaultFromAddress: 'The Rummy Round <no-reply@therummyround.com>'
+	     defaultFromAddress: 'The Rummy Round <no-reply@kohtut.me>'
 	},
 	paytm_test:{
-		//Live Credentails
 		MID:"PROFUS47773646881480",
 		WEBSITE:"DEFAULT",
 		INDUSTRY_TYPE_ID:"Retail109",

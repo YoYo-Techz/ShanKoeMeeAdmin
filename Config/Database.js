@@ -15,32 +15,32 @@ module.exports = {
 	local: {
 		mode: 'local',
 		mongo: {
-			host: '164.52.199.98',
-			port: 26767,
-			user: 'rummys_admin',
-			password : 'Kiranku123$',
-			database: 'rummys'
+			host: process.env.DB_HOST,
+			user: process.env.DB_USER,
+			password: process.env.DB_PASSWORD,
+			database: process.env.DB_NAME,
+			port: process.env.DB_PORT,
 		}
 
 	},
 	staging: {
 			mode: 'staging',
 			mongo: {
-				host: '164.52.199.98',
-				port: 26767,
-				user: 'rummys_admin',
-				password : 'Kiranku123$',
-				database: 'rummys'
+				host: process.env.DB_HOST,
+				user: process.env.DB_USER,
+				password: process.env.DB_PASSWORD,
+				database: process.env.DB_NAME,
+				port: process.env.DB_PORT,
 			}
 	},
 	production: {
 		mode: 'production',
 		mongo: {
-			host: '164.52.199.98',
-			port: 26767,
-			user: 'rummys_admin',
-			password : 'Kiranku123$',
-			database: 'rummys'
+			host: process.env.DB_HOST,
+			user: process.env.DB_USER,
+			password: process.env.DB_PASSWORD,
+			database: process.env.DB_NAME,
+			port: process.env.DB_PORT,
 		}
 	}
 }

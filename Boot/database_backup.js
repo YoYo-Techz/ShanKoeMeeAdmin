@@ -4,14 +4,16 @@ const _ = require('lodash');
 const exec = require('child_process').exec;
 const path = require('path');
 var zipFolder = require('zip-folder');
+require('dotenv').config();
 
 const nodemailer = require('nodemailer');
+
 var defaultTransport = nodemailer.createTransport({
  service: 'Gmail',
  host: "smtp.gmail.com",
  port: 587,
  auth: {
-   user: "no-reply@therummyround.com",
+   user: "no-reply@kohtut.me",
    pass: "Shree@1204"
  }
 });
@@ -20,11 +22,11 @@ const backupDirPath = path.join(__dirname, '../public/database-backup');
 console.log("DB PATH : "+backupDirPath);
 
 const dbOptions = {
-  user: '',
-  pass: '',
-  host: '127.0.0.1',
-  port: 27017,
-  database: 'express-rummy',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT,
   autoBackup: true,
   removeOldBackup: true,
   keepLastDaysBackup: 0,
@@ -124,10 +126,10 @@ exports.dbAutoBackUp = () => {
             } else {
                 console.log('EXCELLENT');
                   var mailOptions = {
-                          to: "backup@kalpcorporate.com",
+                          to: "info@kohtut.me",
                           from: 'The RummyRounds',
-                          subject: 'Therummyround Database Backup' ,
-                          text: 'Hello' +'  Admin' +',\n\n  Therummyround MongoDB Databse Backup'+',\n\n  Server time : '+ new Date().toLocaleString(),
+                          subject: 'shan Database Backup' ,
+                          text: 'Hello' +'  Admin' +',\n\n  shan MongoDB Databse Backup'+',\n\n  Server time : '+ new Date().toLocaleString(),
                           attachments: [
                             {   // utf-8 string as an attachment
                                 path:  newBackupPath+'.zip'

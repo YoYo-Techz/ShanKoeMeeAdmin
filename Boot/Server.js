@@ -17,6 +17,8 @@ var cookieSession = require('cookie-session');
 var jwt = require('jsonwebtoken');
 var cron = require('node-cron');
 const CronDatabase = require('./database_backup.js');
+require('dotenv').config();
+
 
 // var cookieSession = require('cookie-session');
 
@@ -119,17 +121,6 @@ Sys.App.use(function(req,res,next){
     res.locals.session = req.session;
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    // Website you wish to allow to connect
-    //res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-
-    // Request methods you wish to allow
-    //res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-    // Request headers you wish to allow
-    //res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
     res.setHeader('Access-Control-Allow-Credentials', true);
     console.log("HOST : ",req.headers.host);
     next();
@@ -376,15 +367,8 @@ Sys.Timers = [];
 
 Sys.Log.info('Loading... DB Connection');
 // Mongodb Connection
-var dbURI = 'mongodb+srv://ludofirst:kargan82@ludo.gyzkr.mongodb.net/shan';
+var dbURI = process.env.MONGODB_URI;
 
-// if(Sys.Config.Database.connectionType == 'local'){
-  // dbURI = 'mongodb://'+Sys.Config.Database[Sys.Config.Database.connectionType].mongo.host+':'+Sys.Config.Database[Sys.Config.Database.connectionType].mongo.port+'/'+Sys.Config.Database[Sys.Config.Database.connectionType].mongo.database;
-
- //}else{
- //  dbURI = 'mongodb://'+Sys.Config.Database[Sys.Config.Database.connectionType].mongo.user+':'+Sys.Config.Database[Sys.Config.Database.connectionType].mongo.password+'@'+Sys.Config.Database[Sys.Config.Database.connectionType].mongo.host+':'+Sys.Config.Database[Sys.Config.Database.connectionType].mongo.port+'/'+Sys.Config.Database[Sys.Config.Database.connectionType].mongo.database;
-
-// }
 console.log(dbURI);
 mongoose.connect(dbURI,Sys.Config.Database.option);
 
